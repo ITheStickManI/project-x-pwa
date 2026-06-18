@@ -1,7 +1,9 @@
-const CACHE_NAME = 'projeto-x-backup-v4';
+const CACHE_NAME = 'projeto-x-backup-v5';
 const APP_SHELL = [
   './',
   './index.html',
+  './style.css',
+  './app.js',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png'
