@@ -1,0 +1,915 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projeto X - Organizador Pessoal</title>
+  <meta name="description" content="Organizador pessoal de vídeos com avaliação, histórico, watchlist e dashboard." />
+  <meta name="theme-color" content="#020617" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- PWA -->
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Projeto X" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+</head>
+<body>
+  <aside class="desktop-sidebar" aria-label="Navegação principal desktop">
+    <div class="desktop-sidebar-brand">
+      <div class="desktop-sidebar-logo">PX</div>
+      <div>
+        <div class="desktop-sidebar-title">Projeto X</div>
+        <div class="desktop-sidebar-subtitle">Biblioteca pessoal</div>
+      </div>
+    </div>
+    <nav class="desktop-sidebar-nav">
+      <button class="desktop-nav-btn global-search-trigger" type="button" onclick="abrirBuscaGlobal()"><span class="icon">🔍</span><span>Buscar</span></button>
+      <button class="tab-btn desktop-nav-btn active" type="button" data-section="cadastro" onclick="showMainSection('cadastro', this)"><span class="icon">✍️</span><span>Cadastrar / Editar</span></button>
+      <button class="tab-btn desktop-nav-btn" type="button" data-section="dashboard" onclick="showMainSection('dashboard', this)"><span class="icon">📊</span><span>Dashboard</span></button>
+      <button class="tab-btn desktop-nav-btn" type="button" data-section="watchlist" onclick="showMainSection('watchlist', this)"><span class="icon">🕒</span><span>Watchlist</span></button>
+      <button class="tab-btn desktop-nav-btn" type="button" data-section="historico" onclick="showMainSection('historico', this)"><span class="icon">🎬</span><span>Histórico</span></button>
+      <button class="tab-btn desktop-nav-btn" type="button" data-section="atrizes" onclick="showMainSection('atrizes', this)"><span class="icon">⭐</span><span>Atrizes</span></button>
+      <button class="tab-btn desktop-nav-btn" type="button" data-section="tags" onclick="showMainSection('tags', this)"><span class="icon">📚</span><span>Biblioteca</span></button>
+      <button class="tab-btn desktop-nav-btn" type="button" data-section="configuracoes" onclick="showMainSection('configuracoes', this)"><span class="icon">⚙️</span><span>Configurações</span></button>
+    </nav>
+    <div class="desktop-sidebar-footer">
+      <div class="small muted">Notas com cores automáticas</div>
+      <div class="sidebar-score-legend">
+        <span class="legend-dot low"></span><span>0–4,99</span>
+        <span class="legend-dot mid"></span><span>5–6,99</span>
+        <span class="legend-dot good"></span><span>7–8,49</span>
+        <span class="legend-dot top"></span><span>8,5–10</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="container grid">
+    <div class="app-topbar">
+      <div>
+        <div class="app-kicker">Painel pessoal</div>
+        <h1>Projeto X</h1>
+        <div class="app-subtitle">Organize, avalie e encontre rapidamente seus vídeos salvos.</div>
+      </div>
+
+      <div id="pwaInstallCard" class="pwa-install-card" role="status" aria-live="polite">
+        <div>
+          <strong>Instalar Projeto X</strong>
+          <div class="small">Use como aplicativo e mantenha os dados disponíveis offline neste dispositivo.</div>
+        </div>
+        <div class="pwa-install-actions">
+          <button id="pwaInstallBtn" type="button">Instalar</button>
+          <button id="pwaDismissBtn" class="btn-secondary" type="button">Agora não</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" type="button" onclick="showMainSection('cadastro', this)">Cadastrar / Editar Vídeo</button>
+      <button class="tab-btn" type="button" onclick="showMainSection('dashboard', this)">Dashboard</button>
+      <button class="tab-btn" type="button" onclick="showMainSection('watchlist', this)">Lista Para Ver No Futuro</button>
+      <button class="tab-btn" type="button" onclick="showMainSection('historico', this)">Histórico de Vídeos</button>
+      <button class="tab-btn" type="button" onclick="showMainSection('atrizes', this)">Atrizes</button>
+      <button class="tab-btn" type="button" onclick="showMainSection('tags', this)">Biblioteca</button>
+      <button class="tab-btn" type="button" onclick="showMainSection('configuracoes', this)">Configurações</button>
+    </div>
+
+
+    <div class="mobile-bottom-nav" aria-label="Navegação principal">
+      <button class="tab-btn active" type="button" data-section="cadastro" onclick="showMainSection('cadastro', this)"><span class="icon">✍️</span><span>Cadastro</span></button>
+      <button class="tab-btn" type="button" data-section="dashboard" onclick="showMainSection('dashboard', this)"><span class="icon">📊</span><span>Dashboard</span></button>
+      <button class="tab-btn" type="button" data-section="watchlist" onclick="showMainSection('watchlist', this)"><span class="icon">🕒</span><span>Fila</span></button>
+      <button class="tab-btn" type="button" data-section="historico" onclick="showMainSection('historico', this)"><span class="icon">🎬</span><span>Histórico</span></button>
+      <button class="tab-btn" type="button" data-section="atrizes" onclick="showMainSection('atrizes', this)"><span class="icon">⭐</span><span>Atrizes</span></button>
+      <button class="tab-btn" type="button" data-section="tags" onclick="showMainSection('tags', this)"><span class="icon">📚</span><span>Biblioteca</span></button>
+      <button class="tab-btn" type="button" data-section="configuracoes" onclick="showMainSection('configuracoes', this)"><span class="icon">⚙️</span><span>Ajustes</span></button>
+    </div>
+
+    <div class="card section-card main-section active" id="section-cadastro">
+      <div class="section-header">
+        <h2>Cadastrar / Editar Vídeo</h2>
+        <button class="btn-secondary toggle-btn" type="button" onclick="toggleSection('secCadastro')">Minimizar</button>
+      </div>
+      <div class="section-body" id="secCadastro">
+      <div id="editModeBanner" class="edit-mode-banner" style="display:none">
+        <span>✏️ Editando: <strong id="editModeVideoName"></strong></span>
+        <button class="btn-secondary" type="button" onclick="clearForm()">Cancelar edição</button>
+      </div>
+      <div class="grid grid-2 equal-grid">
+        <div>
+          <label>Nome</label>
+          <input id="nome" placeholder="Nome do vídeo" />
+        </div>
+        <div>
+          <label>Studio</label>
+          <input id="studio" list="sugestoesStudiosCadastro" placeholder="Nome do studio ou grupo" />
+          <datalist id="sugestoesStudiosCadastro"></datalist>
+        </div>
+        <div>
+          <label>Atrizes</label>
+          <input id="atriz" placeholder="Ex.: Atriz 1, Atriz 2" />
+        </div>
+        <div>
+          <label>Tags</label>
+          <input id="tags" type="hidden" />
+          <div class="tag-selector">
+            <input id="tagInput" list="sugestoesTagsCadastro" placeholder="Selecione uma tag padronizada" />
+            <datalist id="sugestoesTagsCadastro"></datalist>
+            <button id="addTagBtn" type="button">Adicionar Tag</button>
+          </div>
+          <div id="selectedTags" class="selected-tags"></div>
+          <div class="tag-help-text"></div>
+        </div>
+        <div>
+          <label>Link do Vídeo</label>
+          <input id="link" placeholder="https://..." />
+        </div>
+      </div>
+      <div class="grid grid-4 top-gap">
+        <div class="score-field">
+          <label>Cenas de Sexo</label>
+          <input id="sexo" data-score-field="sexo" type="number" min="0" max="10" step="1" value="0" />
+          <div class="score-help" id="help-sexo"></div>
+        </div>
+        <div class="score-field">
+          <label>Performance</label>
+          <input id="performance" data-score-field="performance" type="number" min="0" max="10" step="1" value="0" />
+          <div class="score-help" id="help-performance"></div>
+        </div>
+        <div class="score-field">
+          <label>Casting</label>
+          <input id="casting" data-score-field="casting" type="number" min="0" max="10" step="1" value="0" />
+          <div class="score-help" id="help-casting"></div>
+        </div>
+        <div class="score-field">
+          <label>Tema</label>
+          <input id="tema" data-score-field="tema" type="number" min="0" max="10" step="1" value="0" />
+          <div class="score-help" id="help-tema"></div>
+        </div>
+        <div class="score-field">
+          <label>Produção</label>
+          <input id="producao" data-score-field="producao" type="number" min="0" max="10" step="1" value="0" />
+          <div class="score-help" id="help-producao"></div>
+        </div>
+        <div class="score-field">
+          <label>Estética</label>
+          <input id="estetica" data-score-field="estetica" type="number" min="0" max="10" step="1" value="0" />
+          <div class="score-help" id="help-estetica"></div>
+        </div>
+        <div class="score-field">
+          <label>Roteiro</label>
+          <input id="roteiro" data-score-field="roteiro" type="number" min="0" max="10" step="1" value="0" />
+          <div class="score-help" id="help-roteiro"></div>
+        </div>
+        <div class="score-field">
+          <label>Reassistibilidade</label>
+          <input id="reassist" data-score-field="reassist" type="number" min="0" max="10" step="1" value="0" />
+          <div class="score-help" id="help-reassist"></div>
+        </div>
+      </div>
+
+      <div class="card top-gap" style="padding:14px;background:rgba(59,130,246,.12);border-color:#3b82f6;">
+
+        <div class="small muted">Prévia da Nota Final</div>
+        <div id="notaPreview" style="font-size:28px;font-weight:800;margin-top:6px">0.00</div>
+        <div class="small muted" id="notaPreviewDetalhe">Atualiza automaticamente enquanto você preenche as notas.</div>
+      </div>
+
+
+      <div class="guide-box">
+        <h3 style="margin-bottom:6px">Guia de Avaliação das Categorias</h3>
+        <div class="small muted">Use este resumo como referência rápida na hora de atribuir as notas.</div>
+
+        <div class="guide-grid">
+          <div class="guide-item">
+            <h4>Cenas de Sexo (25%)</h4>
+            <ul>
+              <li>Química entre os participantes</li>
+              <li>Naturalidade da cena</li>
+              <li>Variedade e dinâmica</li>
+              <li>Ritmo e envolvimento geral</li>
+            </ul>
+          </div>
+          <div class="guide-item">
+            <h4>Performance (10%)</h4>
+            <ul>
+              <li>Expressividade corporal e facial</li>
+              <li>Energia e intensidade</li>
+              <li>Convencimento da atuação</li>
+              <li>Consistência ao longo do vídeo</li>
+            </ul>
+          </div>
+          <div class="guide-item">
+            <h4>Casting (10%)</h4>
+            <ul>
+              <li>Escolha das atrizes de acordo com seu gosto</li>
+              <li>Combinação entre perfis</li>
+              <li>Carisma e presença em cena</li>
+              <li>Adequação ao tipo de vídeo</li>
+            </ul>
+          </div>
+          <div class="guide-item">
+            <h4>Tema (15%)</h4>
+            <ul>
+              <li>Alinhamento com sua preferência pessoal</li>
+              <li>Coerência do tema proposto</li>
+              <li>Entrega do que o vídeo promete</li>
+              <li>Nível de interesse gerado pelo contexto</li>
+            </ul>
+          </div>
+          <div class="guide-item">
+            <h4>Produção (15%)</h4>
+            <ul>
+              <li>Qualidade de imagem e iluminação</li>
+              <li>Qualidade de áudio</li>
+              <li>Edição e fluidez dos cortes</li>
+              <li>Ângulos e acabamento técnico</li>
+            </ul>
+          </div>
+          <div class="guide-item">
+            <h4>Estética (5%)</h4>
+            <ul>
+              <li>Beleza visual geral</li>
+              <li>Cenário e ambientação</li>
+              <li>Figurino e composição da cena</li>
+              <li>Apelo visual do conjunto</li>
+            </ul>
+          </div>
+          <div class="guide-item">
+            <h4>Roteiro (5%)</h4>
+            <ul>
+              <li>Existência de contexto mínimo</li>
+              <li>Coerência da introdução</li>
+              <li>Integração com o tema</li>
+              <li>Organização da progressão da cena</li>
+            </ul>
+          </div>
+          <div class="guide-item">
+            <h4>Reassistibilidade (15%)</h4>
+            <ul>
+              <li>Vontade real de assistir novamente</li>
+              <li>Potencial de virar favorito</li>
+              <li>Capacidade de manter interesse no tempo</li>
+              <li>Valor de replay do vídeo</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="shortcut-box">
+        <div class="small muted" style="margin-bottom:8px;">Atalhos rápidos</div>
+        <div class="small">
+          <kbd>Ctrl</kbd> + <kbd>S</kbd> Salvar na aba atual &nbsp; • &nbsp;
+          <kbd>Esc</kbd> Limpar formulário da aba atual &nbsp; • &nbsp;
+          <kbd>Ctrl</kbd> + <kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd>/<kbd>4</kbd>/<kbd>5</kbd>/<kbd>6</kbd> Trocar de aba
+        </div>
+      </div>
+
+      <div class="row top-gap">
+        <button id="saveBtn">Adicionar</button>
+        <button class="btn-secondary" id="clearBtn" type="button">Limpar</button>
+        <button class="btn-secondary" id="exportBtn" type="button">Exportar Backup</button>
+        <input id="importFile" type="file" accept=".json" style="max-width:260px" />
+      </div>
+      </div>
+    </div>
+
+    <div class="card section-card main-section" id="section-dashboard">
+      <div class="section-header">
+        <h2>Dashboard</h2>
+        <button class="btn-secondary toggle-btn" type="button" onclick="toggleSection('secDashboard')">Minimizar</button>
+      </div>
+      <div class="section-body" id="secDashboard">
+      <div class="dashboard-shell">
+        <div class="card dashboard-filter-card">
+          <h3 style="margin-top:0">Filtros do Dashboard</h3>
+          <div class="dashboard-filter-grid">
+            <div>
+              <label>Filtrar por Studio ou Grupo</label>
+              <input id="filtroStudio" list="sugestoesStudiosDashboard" placeholder="Digite parte do nome do studio ou grupo" />
+              <datalist id="sugestoesStudiosDashboard"></datalist>
+            </div>
+            <div>
+              <label>Filtrar por Atriz</label>
+              <input id="filtroAtriz" list="sugestoesAtrizesDashboard" placeholder="Pesquisar atriz" />
+              <datalist id="sugestoesAtrizesDashboard"></datalist>
+            </div>
+            <div>
+              <label>&nbsp;</label>
+              <button class="btn-secondary" id="limparFiltros">Limpar Filtros</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="stats equal-grid dashboard-stats">
+          <div class="card"><div class="muted">Vídeos no Dashboard</div><div class="stat-number" id="statVideos">0</div></div>
+          <div class="card"><div class="muted">Nota Média</div><div class="stat-number" id="statMedia">0.00</div></div>
+          <div class="card"><div class="muted">Favoritos</div><div class="stat-number" id="statFavoritos">0</div></div>
+          <div class="card"><div class="muted">Total Cadastrado</div><div class="stat-number" id="statTotal">0</div></div>
+          <div class="card"><div class="muted">Último vídeo</div><div class="stat-number" id="statDias">—</div></div>
+        </div>
+
+        <div class="card dashboard-panel">
+          <div class="section-header" style="margin-bottom:0">
+            <div>
+              <h2 style="margin-bottom:6px">Histograma de Notas</h2>
+              <div class="small muted">Distribuição dos vídeos filtrados por faixa de nota.</div>
+            </div>
+          </div>
+          <div id="histogramaNotas"></div>
+        </div>
+
+        <div class="card dashboard-panel">
+          <h2>Vídeos por Mês</h2>
+          <div class="small muted" style="margin-bottom:12px">Histórico de avaliações nos últimos 12 meses.</div>
+          <div id="graficoTemporal"></div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card dashboard-panel">
+            <h2>Top Studios</h2>
+            <div id="topStudios"></div>
+          </div>
+          <div class="card dashboard-panel">
+            <h2>Top Atrizes</h2>
+            <div class="small muted" style="margin-bottom:10px;">Score calculado por Performance, Tema, Reassistibilidade, Casting e Cenas de Sexo.</div>
+            <div id="topAtrizes"></div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="card section-card main-section" id="section-watchlist">
+      <div class="section-header">
+        <h2>Lista Para Ver No Futuro</h2>
+        <button class="btn-secondary toggle-btn" type="button" onclick="toggleSection('secWatchlist')">Minimizar</button>
+      </div>
+      <div class="section-body" id="secWatchlist">
+        <div class="watchlist-shell">
+          <div class="watchlist-hero">
+            <h3>Planeje o próximo vídeo da sua fila</h3>
+            <div class="muted">Cadastre rapidamente novos itens, organize a prioridade e use os filtros para decidir o que assistir depois. A recomendação da fila agora considera a prioridade e também dá peso extra para vídeos com atrizes marcadas como favoritas.</div>
+          </div>
+
+          <div class="watchlist-stat-grid">
+            <div class="watchlist-stat-card">
+              <div class="watchlist-stat-label">Total na Watchlist</div>
+              <div class="watchlist-stat-value" id="watchStatTotal">0</div>
+            </div>
+            <div class="watchlist-stat-card">
+              <div class="watchlist-stat-label">Itens Visíveis</div>
+              <div class="watchlist-stat-value" id="watchStatFiltered">0</div>
+            </div>
+            <div class="watchlist-stat-card">
+              <div class="watchlist-stat-label">Prioridade Alta / Muito Alta</div>
+              <div class="watchlist-stat-value" id="watchStatPriority">0</div>
+            </div>
+            <div class="watchlist-stat-card">
+              <div class="watchlist-stat-label">Com Atriz Favorita</div>
+              <div class="watchlist-stat-value" id="watchStatLinks">0</div>
+            </div>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="card watchlist-form-card">
+              <div class="watchlist-panel-header">
+                <div>
+                  <h3>Cadastro Rápido</h3>
+                  <div class="watchlist-panel-subtitle">Adicione novos vídeos à fila ou edite um item já salvo.</div>
+                </div>
+                <div id="watchFormStatus" class="watchlist-status-card">Modo atual: Novo item</div>
+              </div>
+
+              <div id="watchEditModeBanner" class="edit-mode-banner" style="display:none">
+                <span>✏️ Editando: <strong id="watchEditModeVideoName"></strong></span>
+                <button class="btn-secondary" type="button" onclick="clearWatchForm()">Cancelar edição</button>
+              </div>
+              <div class="watchlist-form-grid">
+                <div>
+                  <label>Nome do Vídeo</label>
+                  <input id="watchNome" placeholder="Nome do vídeo" />
+                </div>
+                <div>
+                  <label>Studio</label>
+                  <input id="watchStudio" list="sugestoesStudiosCadastroWatchlist" placeholder="Digite parte do nome" />
+                  <datalist id="sugestoesStudiosCadastroWatchlist"></datalist>
+                </div>
+                <div>
+                  <label>Atrizes</label>
+                  <input id="watchAtrizes" placeholder="Ex.: Atriz 1, Atriz 2" />
+                </div>
+                <div class="full-width">
+                  <label>Tags</label>
+                  <input id="watchTags" type="hidden" />
+                  <div class="tag-selector">
+                    <input id="watchTagInput" list="sugestoesTagsWatchlist" placeholder="Selecione uma tag padronizada" />
+                    <datalist id="sugestoesTagsWatchlist"></datalist>
+                    <button id="watchAddTagBtn" type="button">Adicionar Tag</button>
+                  </div>
+                  <div id="watchSelectedTags" class="selected-tags"></div>
+                </div>
+                <div>
+                  <label>Prioridade</label>
+                  <select id="watchPrioridade" style="width:100%;padding:10px 12px;border-radius:12px;background:#0b1220;color:white;border:1px solid #334155">
+                    <option value="Muito Alta">Muito Alta</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Média" selected>Média</option>
+                    <option value="Baixa">Baixa</option>
+                    <option value="Muito Baixa">Muito Baixa</option>
+                  </select>
+                </div>
+                <div class="full-width">
+                  <label>Link do Vídeo</label>
+                  <input id="watchLink" placeholder="https://..." />
+                </div>
+              </div>
+
+              <div class="watchlist-form-actions">
+                <button id="addWatchBtn" type="button">Adicionar à Lista</button>
+                <button id="clearWatchBtn" class="btn-secondary" type="button">Limpar</button>
+              </div>
+            </div>
+
+            <div class="card watchlist-filter-card">
+              <div class="watchlist-panel-header">
+                <div>
+                  <h3>Filtros da Fila</h3>
+                  <div class="watchlist-panel-subtitle">Refine a visualização por texto, prioridade ou studio/grupo antes de sortear ou editar.</div>
+                </div>
+                <div id="watchFilterStatus" class="watchlist-status-card">Nenhum filtro ativo</div>
+              </div>
+
+              <div class="watchlist-filter-grid">
+                <div class="full-width">
+                  <label>Buscar na Lista</label>
+                  <input id="watchFiltroBusca" placeholder="Nome, studio, grupo ou atriz" />
+                </div>
+                <div>
+                  <label>Filtrar por Prioridade</label>
+                  <select id="watchFiltroPrioridade" style="width:100%;padding:10px 12px;border-radius:12px;background:#0b1220;color:white;border:1px solid #334155">
+                    <option value="">Todas</option>
+                    <option value="Muito Alta">Muito Alta</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Média">Média</option>
+                    <option value="Baixa">Baixa</option>
+                    <option value="Muito Baixa">Muito Baixa</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Filtrar por Studio ou Grupo</label>
+                  <input id="watchFiltroStudio" list="sugestoesStudiosFiltroWatchlist" placeholder="Digite parte do nome" />
+                  <datalist id="sugestoesStudiosFiltroWatchlist"></datalist>
+                </div>
+                <div>
+                  <label>Ordenar por</label>
+                  <select id="watchOrdenacao" style="width:100%;padding:10px 12px;border-radius:12px;background:#0b1220;color:white;border:1px solid #334155">
+                    <option value="original">Ordem original</option>
+                    <option value="nome_az">Nome (A → Z)</option>
+                    <option value="prioridade_desc">Prioridade (maior → menor)</option>
+                    <option value="studio_az">Studio (A → Z)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="watchlist-filter-actions">
+                <button id="sortearWatchBtn" type="button">Sortear Vídeo</button>
+                <button id="clearWatchFiltrosBtn" class="btn-secondary" type="button">Limpar Filtros</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="watchSorteado"></div>
+          <div id="watchlist"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card section-card main-section" id="section-historico">
+      <div class="section-header">
+        <h2>Histórico de Vídeos</h2>
+        <button class="btn-secondary toggle-btn" type="button" onclick="toggleSection('secHistorico')">Minimizar</button>
+      </div>
+      <div class="section-body" id="secHistorico">
+        <div class="historico-shell">
+          <div class="historico-hero">
+            <h3>Arquivo de Avaliações</h3>
+            <div class="muted">Explore seu histórico com filtros avançados, destaque seus favoritos e encontre rapidamente os melhores vídeos salvos pela sua nota final, tema ou elenco.</div>
+          </div>
+
+          <div class="historico-stat-grid">
+            <div class="historico-stat-card">
+              <div class="historico-stat-label">Total no Histórico</div>
+              <div class="historico-stat-value" id="historicoStatTotal">0</div>
+            </div>
+            <div class="historico-stat-card">
+              <div class="historico-stat-label">Resultados Visíveis</div>
+              <div class="historico-stat-value" id="historicoStatFiltered">0</div>
+            </div>
+            <div class="historico-stat-card">
+              <div class="historico-stat-label">Favoritos Visíveis</div>
+              <div class="historico-stat-value" id="historicoStatFavorites">0</div>
+            </div>
+            <div class="historico-stat-card">
+              <div class="historico-stat-label">Nota Média Atual</div>
+              <div class="historico-stat-value" id="historicoStatAverage">0.00</div>
+            </div>
+          </div>
+
+          <div class="card historico-filter-card">
+            <div class="historico-panel-header">
+              <div>
+                <h3>Filtros do Histórico</h3>
+                <div class="historico-panel-subtitle">Busque por texto, tag e ordem de classificação para localizar rapidamente o conteúdo que mais importa.</div>
+              </div>
+              <div id="historicoFilterStatus" class="historico-status-card">Nenhum filtro ativo</div>
+            </div>
+            <div class="historico-filter-grid">
+              <div>
+                <label>Pesquisar no Histórico</label>
+                <input id="buscaHistorico" list="sugestoesHistorico" placeholder="Buscar por nome do vídeo, studio, grupo, atriz ou tag" />
+                <datalist id="sugestoesHistorico"></datalist>
+              </div>
+              <div>
+                <label>Filtrar Diretamente por Tag</label>
+                <input id="filtroTagHistorico" list="sugestoesTagsHistorico" placeholder="Escolha ou digite uma tag" />
+                <datalist id="sugestoesTagsHistorico"></datalist>
+              </div>
+              <div>
+                <label>Ordenar por</label>
+                <select id="ordenacao" style="width:100%;padding:10px 12px;border-radius:12px;background:#0b1220;color:white;border:1px solid #334155">
+                  <option value="nota_desc">Nota (maior → menor)</option>
+                  <option value="nota_asc">Nota (menor → maior)</option>
+                  <option value="az">A → Z</option>
+                  <option value="za">Z → A</option>
+                  <option value="data_desc">Data (mais recente)</option>
+                  <option value="data_asc">Data (mais antiga)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="card historico-panel">
+            <div class="historico-panel-header">
+              <div>
+                <h3>Busca Avançada</h3>
+                <div class="historico-panel-subtitle">Refine por faixa de nota, studio/grupo, atriz favorita e modo de visualização.</div>
+              </div>
+            </div>
+            <div class="historico-advanced-grid">
+              <div>
+                <label>Nota Mínima</label>
+                <input id="notaMinHistorico" type="number" min="0" max="10" step="0.01" placeholder="Ex.: 7.5" />
+              </div>
+              <div>
+                <label>Nota Máxima</label>
+                <input id="notaMaxHistorico" type="number" min="0" max="10" step="0.01" placeholder="Ex.: 10" />
+              </div>
+              <div>
+                <label>Filtrar por Studio ou Grupo</label>
+                <input id="filtroStudioHistorico" list="sugestoesStudiosDashboard" placeholder="Studio ou grupo" />
+              </div>
+              <div>
+                <label>Filtrar por Atriz</label>
+                <input id="filtroAtrizHistorico" list="sugestoesAtrizesDashboard" placeholder="Atriz" />
+              </div>
+            </div>
+          </div>
+
+          <div class="card historico-toolbar-card">
+            <div class="historico-toolbar">
+              <div class="historico-toolbar-left">
+                <button class="btn-secondary" id="limparBuscaHistorico" type="button">Limpar Busca do Histórico</button>
+                <label class="small" style="display:flex;align-items:center;gap:8px;margin:0;cursor:pointer">
+                  <input id="somenteFavoritosHistorico" type="checkbox" style="width:auto" />
+                  Mostrar Apenas Favoritos
+                </label>
+              </div>
+              <div class="historico-toolbar-right">
+                <label class="small" style="display:flex;align-items:center;gap:8px;margin:0;">
+                  Visualização
+                  <select id="modoVisualizacaoHistorico" style="padding:8px;border-radius:10px;background:#0b1220;color:white;border:1px solid #334155">
+                    <option value="completa">Completa</option>
+                    <option value="simplificada">Simplificada</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="card historico-sort-card">
+            <div class="historico-panel-header" style="margin-bottom:0;">
+              <div>
+                <h3>Sorteio Inteligente</h3>
+                <div class="historico-panel-subtitle">Use Reassistibilidade e Nota Final como pesos para encontrar algo excelente para rever.</div>
+              </div>
+              <button id="sortearHistoricoBtn" class="btn-secondary" type="button">Sortear do Histórico</button>
+            </div>
+          </div>
+
+          <div id="historicoSorteado"></div>
+          <div id="historico" class="historico-results-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="card section-card main-section" id="section-tags">
+      <div class="section-header">
+        <h2>Biblioteca</h2>
+        <button class="btn-secondary toggle-btn" type="button" onclick="toggleSection('secTags')">Minimizar</button>
+      </div>
+      <div class="section-body" id="secTags">
+        <div class="library-page">
+          <div class="library-hero">
+            <h3>Centro de Organização</h3>
+            <div class="muted">Organize sua biblioteca em um só lugar: mantenha tags padronizadas, visualize rapidamente os studios cadastrados e monte grupos reutilizáveis para filtros e sorteios.</div>
+          </div>
+
+          <div class="library-sections">
+            <div class="tag-library-box library-panel" style="margin-top:0;">
+              <div class="library-panel-header">
+                <div>
+                  <h3>Tags Padronizadas</h3>
+                  <div class="library-panel-subtitle">Adicione, remova ou restaure a lista padrão de tags.</div>
+                </div>
+              </div>
+              <div class="tag-library-grid">
+                <div>
+                  <label>Nova Tag</label>
+                  <input id="newLibraryTag" placeholder="Ex.: Exhibitionism" />
+                </div>
+                <button id="addLibraryTagBtn" type="button">Adicionar à Biblioteca</button>
+                <button id="resetLibraryTagsBtn" class="btn-secondary" type="button">Restaurar Padrão</button>
+              </div>
+              <div class="tag-help-text">As alterações ficam salvas no navegador.</div>
+              <div id="tagLibraryList" class="tag-library-list"></div>
+            </div>
+
+            <div class="library-box library-panel">
+              <div class="library-panel-header">
+                <div>
+                  <h3>Studios Cadastrados</h3>
+                  <div class="library-panel-subtitle">Lista consolidada de studios vindos do histórico e da watchlist.</div>
+                </div>
+              </div>
+              <div class="library-list" id="studioLibraryList"></div>
+            </div>
+
+            <div class="library-box library-panel">
+              <div class="library-panel-header">
+                <div>
+                  <h3>Grupos de Studios</h3>
+                  <div class="library-panel-subtitle">Crie grupos para organizar coleções, temas ou preferências.</div>
+                </div>
+              </div>
+              <div class="library-grid">
+                <div>
+                  <label>Novo Grupo</label>
+                  <input id="newStudioGroupName" placeholder="Ex.: Favoritos VR" />
+                </div>
+                <button id="addStudioGroupBtn" type="button">Criar Grupo</button>
+                <button id="resetStudioGroupsBtn" class="btn-secondary" type="button">Limpar Grupos</button>
+              </div>
+              <div class="tag-help-text">Os grupos criados aqui podem ser usados depois nos filtros e no sorteio.</div>
+              <div id="studioGroupsList" class="studio-groups-wrap"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  
+    <div class="card section-card main-section" id="section-atrizes">
+      <div class="section-header">
+        <h2>Atrizes</h2>
+        <button class="btn-secondary toggle-btn" type="button" onclick="toggleSection('secAtrizes')">Minimizar</button>
+      </div>
+      <div class="section-body" id="secAtrizes">
+
+        <div class="library-box">
+          <div class="library-panel-header">
+            <div>
+              <h3>Cadastro de Atrizes</h3>
+              <div class="library-panel-subtitle">Adicione uma foto de perfil para cada atriz.</div>
+            </div>
+          </div>
+
+          <div class="library-grid">
+            <div>
+              <label>Nome da Atriz</label>
+              <input id="atrizNomeInput" list="sugestoesAtrizesCadastroSistema" placeholder="Ex.: Angela White" />
+              <datalist id="sugestoesAtrizesCadastroSistema"></datalist>
+            </div>
+            <div>
+              <label>Foto</label>
+              <input id="atrizFotoInput" type="file" accept="image/*" />
+            </div>
+            <div style="display:flex;align-items:flex-end;">
+              <label class="favorite-check"><input id="atrizFavoritaInput" type="checkbox" /> Marcar como favorita</label>
+            </div>
+            <button id="addAtrizBtn" type="button">Salvar</button>
+          </div>
+
+        </div>
+
+        <div class="library-box">
+          <div class="library-panel-header">
+            <div>
+              <h3>Lista de Atrizes</h3>
+              <div class="library-panel-subtitle">Visualize atrizes cadastradas e a nota média calculada a partir dos vídeos salvos.</div>
+            </div>
+          </div>
+          <div class="grid grid-3" style="margin-bottom:12px;">
+            <div>
+              <label>Buscar Atriz</label>
+              <input id="atrizBuscaInput" list="sugestoesAtrizesCadastroSistema" placeholder="Digite nome da atriz" />
+            </div>
+            <div>
+              <label>Ordenar por</label>
+              <select id="atrizOrdenacao" style="width:100%;padding:10px 12px;border-radius:12px;background:#0b1220;color:white;border:1px solid #334155">
+                <option value="alfabeta_asc">Nome (A → Z)</option>
+                <option value="alfabeta_desc">Nome (Z → A)</option>
+                <option value="nota_desc">Nota média (maior → menor)</option>
+                <option value="nota_asc">Nota média (menor → maior)</option>
+                <option value="favoritas_primeiro">Favoritas primeiro</option>
+              </select>
+            </div>
+            <div class="row" style="align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+              <label class="favorite-check"><input id="somenteFavoritasAtrizes" type="checkbox" /> Mostrar apenas favoritas</label>
+              <button id="limparFiltroAtrizesBtn" class="btn-secondary" type="button">Limpar Filtros</button>
+            </div>
+          </div>
+          <div id="atrizList" class="library-list"></div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+    <div class="card section-card main-section" id="section-detalhe-video">
+      <div class="section-header">
+        <h2>Página do Vídeo</h2>
+        <button class="btn-secondary" type="button" onclick="voltarDaPaginaVideo()">Voltar</button>
+      </div>
+      <div class="section-body" id="videoDetailContent">
+        <div class="empty">Selecione um vídeo no Histórico ou na Watchlist para ver os detalhes.</div>
+      </div>
+    </div>
+
+    <div class="card section-card main-section" id="section-detalhe-atriz">
+      <div class="section-header">
+        <h2>Página da Atriz</h2>
+        <button class="btn-secondary" type="button" onclick="voltarDaPaginaAtriz()">Voltar</button>
+      </div>
+      <div class="section-body" id="atrizDetailContent">
+        <div class="empty">Selecione uma atriz na lista de Atrizes para ver os detalhes.</div>
+      </div>
+    </div>
+
+    <div class="card section-card main-section" id="section-configuracoes">
+      <div class="section-header">
+        <h2>Configurações Visuais</h2>
+        <button class="btn-secondary toggle-btn" type="button" onclick="toggleSection('secConfiguracoes')">Minimizar</button>
+      </div>
+      <div class="section-body" id="secConfiguracoes">
+        <div class="settings-shell">
+          <div class="settings-hero">
+            <h3>Personalização da interface</h3>
+            <div class="muted">Ajuste densidade, fonte, animações e cor de destaque. As preferências ficam salvas neste navegador.</div>
+          </div>
+          <div class="card" style="border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.07);">
+            <strong style="color:#fcd34d;">⚠ Seus dados ficam apenas neste navegador</strong>
+            <div class="small muted" style="margin-top:6px;line-height:1.6;">
+              Vídeos, watchlist, atrizes e imagens são armazenados no localStorage e IndexedDB deste dispositivo.
+              Se você limpar os dados do site, usar outro navegador ou reinstalar o sistema, <strong>tudo será perdido permanentemente</strong>.
+              Exporte um backup regularmente pela seção abaixo.
+            </div>
+          </div>
+          <div class="card settings-panel">
+            <div class="settings-grid">
+              <div class="setting-row">
+                <div>
+                  <strong>Densidade da interface</strong>
+                  <div class="small muted">Compacta mostra mais itens; confortável preserva mais respiro visual.</div>
+                </div>
+                <select id="visualDensity">
+                  <option value="comfortable">Confortável</option>
+                  <option value="compact">Compacta</option>
+                </select>
+              </div>
+              <div class="setting-row">
+                <div>
+                  <strong>Modo das listas</strong>
+                  <div class="small muted">Compacto mostra apenas resumo; detalhado mostra mais informações direto nos cards.</div>
+                </div>
+                <select id="visualListMode">
+                  <option value="compact">Compacto</option>
+                  <option value="detailed">Detalhado</option>
+                </select>
+              </div>
+              <div class="setting-row">
+                <div>
+                  <strong>Tamanho da fonte</strong>
+                  <div class="small muted">Aumente a leitura geral da interface.</div>
+                </div>
+                <select id="visualFontSize">
+                  <option value="normal">Normal</option>
+                  <option value="large">Grande</option>
+                </select>
+              </div>
+              <div class="setting-row">
+                <div>
+                  <strong>Cor de destaque</strong>
+                  <div class="small muted">Afeta botões, foco de campos e elementos principais.</div>
+                </div>
+                <input id="visualAccentColor" type="color" value="#3b82f6" />
+              </div>
+              <div class="setting-row">
+                <div>
+                  <strong>Reduzir animações</strong>
+                  <div class="small muted">Útil para uma experiência mais direta e leve.</div>
+                </div>
+                <input id="visualReducedMotion" type="checkbox" />
+              </div>
+            </div>
+            <div class="settings-actions">
+              <button id="saveVisualSettingsBtn" type="button">Salvar Configurações</button>
+              <button id="resetVisualSettingsBtn" class="btn-secondary" type="button">Restaurar Padrão</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="atrizModal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Editar Atriz</h3>
+          <button class="btn-secondary" type="button" id="closeAtrizModalBtn">Fechar</button>
+        </div>
+        <div class="modal-preview" id="atrizModalPreview"></div>
+        <div>
+          <label>Nome da Atriz</label>
+          <input id="atrizModalNome" readonly />
+        </div>
+        <div class="grid grid-2 top-gap">
+          <div>
+            <label>Data de Nascimento</label>
+            <input id="atrizModalDataNascimento" type="date" />
+          </div>
+          <div>
+            <label>Local de Nascimento</label>
+            <input id="atrizModalLocalNascimento" placeholder="Ex.: Los Angeles, California, USA" />
+          </div>
+        </div>
+        <div class="top-gap">
+          <label>Nova Foto</label>
+          <input id="atrizModalFotoInput" type="file" accept="image/*" />
+        </div>
+        <div class="top-gap">
+          <label class="favorite-check"><input id="atrizModalFavorita" type="checkbox" /> Marcar atriz como favorita</label>
+        </div>
+        <div class="cropper-box">
+          <div class="small muted">Posicionamento do recorte</div>
+          <div class="cropper-zoom-row">
+            <label for="atrizCropZoom" class="cropper-zoom-label">Zoom</label>
+            <input id="atrizCropZoom" class="cropper-zoom-input" type="range" min="1" max="3" step="0.01" value="1" />
+            <div id="atrizCropZoomValue" class="cropper-zoom-value">100%</div>
+          </div>
+          <div id="atrizCropStage" class="cropper-stage">
+            <img id="atrizCropImage" class="cropper-image" alt="Prévia do recorte" />
+            <div class="cropper-mask"></div>
+          </div>
+          <div class="cropper-help">Arraste a imagem para posicionar o recorte e use o zoom antes de salvar.</div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-secondary" type="button" id="removeAtrizFotoBtn">Remover Foto</button>
+          <button type="button" id="saveAtrizModalBtn">Salvar Alterações</button>
+        </div>
+      </div>
+    </main>
+
+  <button class="mobile-fab-top" id="mobileFabTop" type="button" aria-label="Voltar ao topo">↑</button>
+
+  <div id="globalSearchOverlay" class="global-search-overlay" style="display:none" onclick="fecharBuscaGlobal(event)">
+    <div class="global-search-modal">
+      <input id="globalSearchInput" type="search" placeholder="Buscar vídeos, watchlist, atrizes..." autocomplete="off" />
+      <div id="globalSearchResults" class="global-search-results"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
