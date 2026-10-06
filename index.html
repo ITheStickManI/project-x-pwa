@@ -95,7 +95,7 @@ kbd{display:inline-block;min-width:26px;padding:2px 7px;border-radius:8px;border
 .nav-btn:hover{background:var(--accent-soft);border-color:rgb(var(--accent-rgb) / .2)}
 .nav-btn[aria-current="page"]{background:linear-gradient(180deg,rgb(var(--accent-rgb) / .26),rgb(var(--accent-rgb) / .14));border-color:var(--accent-line);color:#fff;box-shadow:inset 3px 0 0 var(--accent)}
 .sidebar-foot{margin-top:auto;padding:14px;border-radius:var(--r-lg);border:1px solid var(--c-line);background:rgba(2,6,23,.28);display:flex;flex-direction:column;gap:10px}
-.legend{display:grid;grid-template-columns:auto 1fr;gap:6px 8px;align-items:center;color:var(--c-soft);font-size:var(--fs-xs);font-weight:700}
+.legend{display:grid;grid-template-columns:auto auto 1fr;gap:6px 8px;align-items:center;color:var(--c-soft);font-size:var(--fs-xs);font-weight:700}
 .dot{width:10px;height:10px;border-radius:var(--r-pill);display:inline-block;background:rgb(var(--tone))}
 
 .topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--sp-4);flex-wrap:wrap}
@@ -184,10 +184,13 @@ input[type="file"].input{padding:8px 10px}
 .chip-input-row{display:flex;gap:8px;flex-wrap:wrap}
 .chip-input-row .input{flex:1 1 200px;width:auto}
 
-.note-low{--tone:239 68 68;--tone-text:#fecaca}
-.note-mid{--tone:245 158 11;--tone-text:#fde68a}
-.note-good{--tone:59 130 246;--tone-text:#bfdbfe}
-.note-top{--tone:34 197 94;--tone-text:#bbf7d0}
+.note-b1{--tone:239 68 68;--tone-text:#fecaca}
+.note-b2{--tone:249 115 22;--tone-text:#fed7aa}
+.note-b3{--tone:234 179 8;--tone-text:#fef08a}
+.note-b4{--tone:59 130 246;--tone-text:#bfdbfe}
+.note-b5{--tone:20 184 166;--tone-text:#99f6e4}
+.note-b6{--tone:34 197 94;--tone-text:#bbf7d0}
+.note-b7{--tone:168 85 247;--tone-text:#e9d5ff}
 .prio-muito-alta{--tone:220 38 38;--tone-text:#fecaca}
 .prio-alta{--tone:239 68 68;--tone-text:#fca5a5}
 .prio-media{--tone:245 158 11;--tone-text:#fcd34d}
@@ -247,7 +250,7 @@ input[type="file"].input{padding:8px 10px}
 
 /* ---------- 5. TELAS ---------- */
 /* dashboard */
-.histogram{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:var(--sp-3)}
+.histogram{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:14px;margin-top:var(--sp-3)}
 .hcard{display:flex;flex-direction:column;justify-content:flex-end;gap:8px;padding:14px 12px;border-radius:var(--r-lg);border:1px solid var(--c-line);background:rgba(11,18,32,.55)}
 .hbar-wrap{height:140px;display:flex;align-items:flex-end;justify-content:center}
 .hbar{width:100%;max-width:72px;min-height:6px;border-radius:14px 14px 8px 8px;background:linear-gradient(180deg,rgb(var(--tone) / .95),rgb(var(--tone) / .55));transition:height .25s ease}
@@ -336,6 +339,7 @@ dialog[open]{animation:pop .16s ease}
 @media (max-width:1100px){
   .cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .histogram{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 @media (max-width:900px){
   .cols-2,.cols-3,.form-grid,.guide-grid,.settings-grid,.item-detail,.kpis{grid-template-columns:1fr}
@@ -458,6 +462,31 @@ dialog.modal-lg[open]{display:flex;flex-direction:column}
 }
 @media (max-width:480px){ .picker-opt{flex-wrap:wrap} .opt-label{flex-basis:calc(100% - 60px)} }
 
+/* ---------- v2.2: pesquisa universal ---------- */
+.search-trigger{display:flex;align-items:center;gap:10px;min-height:var(--tap);min-width:min(100%,360px);padding:0 14px;border-radius:var(--r-md);border:1px solid var(--c-border);background:var(--c-field);color:var(--c-muted);font:inherit;cursor:pointer;text-align:left;transition:border-color var(--t-fast),background var(--t-fast)}
+.search-trigger:hover{border-color:var(--accent-line);background:#101a2e}
+.search-trigger .st-text{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+dialog.search-dialog{max-height:min(640px,calc(100vh - 32px));align-self:flex-start;margin-top:8vh}
+.search-field{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:10px}
+.search-field .input{border:0;background:transparent;box-shadow:none;padding-left:0}
+.search-field .input:focus{box-shadow:none}
+.res-group h4{font-size:var(--fs-xs);font-weight:800;color:var(--accent-text);text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px}
+.res-row{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;padding:8px 12px;border:1px solid var(--c-line);border-radius:var(--r-md);background:rgba(2,6,23,.22);color:inherit;font:inherit;text-align:left;cursor:pointer}
+.res-row+.res-row{margin-top:6px}
+.res-row:hover,.res-row[aria-selected="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.res-row .t{flex:1 1 auto;min-width:0;overflow-wrap:anywhere;font-weight:700}
+.res-row .s{display:block;font-size:var(--fs-xs);color:var(--c-muted);font-weight:500}
+.res-row .avatar{--size:34px;border-width:1px}
+.res-more{margin-top:8px}
+.fab-search{display:none}
+@media (max-width:768px){
+  .search-trigger{width:100%}
+  .search-trigger kbd{display:none}
+  .fab-search{display:flex;opacity:1;pointer-events:auto;transform:none;bottom:calc(146px + env(safe-area-inset-bottom))}
+  dialog.search-dialog{margin:0 auto auto;max-height:86vh;border-radius:0 0 var(--r-xl) var(--r-xl);width:100%;max-width:100%}
+}
+@media (min-width:769px){ .fab-search{display:none!important} }
+
 /* alvos de toque maiores em telas sensíveis ao toque */
 @media (pointer:coarse){
   .btn-sm{min-height:44px}
@@ -492,12 +521,7 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
     <div class="sidebar-foot">
       <div>
         <div class="small muted">Notas com cores automáticas</div>
-        <div class="legend" style="margin-top:10px">
-          <span class="dot note-low"></span><span>0–4,99</span>
-          <span class="dot note-mid"></span><span>5–6,99</span>
-          <span class="dot note-good"></span><span>7–8,49</span>
-          <span class="dot note-top"></span><span>8,5–10</span>
-        </div>
+        <div class="legend" id="noteLegend" style="margin-top:10px"></div>
       </div>
       <div>
         <div class="small muted" id="backupStamp">Último backup: nunca</div>
@@ -513,6 +537,9 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
         <h1>Projeto X</h1>
         <p class="subtitle">Organize, avalie e encontre rapidamente seus vídeos salvos.</p>
       </div>
+      <button type="button" class="search-trigger" id="searchTrigger" data-action="openSearch" aria-haspopup="dialog" aria-label="Pesquisar vídeos, atrizes e estúdios">
+        <span aria-hidden="true">🔍</span><span class="st-text">Pesquisar vídeos, atrizes, estúdios…</span><kbd>Ctrl K</kbd>
+      </button>
       <div id="pwaInstallCard" class="install-card" role="status">
         <div>
           <strong>Instalar Projeto X</strong>
@@ -523,6 +550,11 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
           <button id="pwaDismissBtn" class="btn btn-secondary btn-sm" type="button">Agora não</button>
         </div>
       </div>
+    </div>
+
+    <div id="backupReminder" class="banner banner--warn" role="status" hidden>
+      <span id="backupReminderText"></span>
+      <span class="row" style="gap:8px"><button type="button" class="btn btn-sm" data-action="exportBackup">Fazer backup agora</button><button type="button" class="btn btn-secondary btn-sm" data-action="snoozeBackup">Lembrar amanhã</button></span>
     </div>
 
     <div id="storageWarning" class="banner banner--warn" role="alert" hidden>
@@ -594,7 +626,7 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
               <div class="grid cols-4" id="scoreGrid"></div>
             </fieldset>
 
-            <div class="nota-preview note-mid" id="notaPreview" aria-live="polite">
+            <div class="nota-preview note-b3" id="notaPreview" aria-live="polite">
               <div class="small muted">Prévia da Nota Final</div>
               <div class="value" id="notaValue">0.00</div>
               <div class="small muted" id="notaDetail"></div>
@@ -617,7 +649,7 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
             <summary>Atalhos de teclado</summary>
             <div class="small" style="line-height:2">
               <kbd>Ctrl</kbd> + <kbd>S</kbd> Salvar (Cadastro / Watchlist) • <kbd>Esc</kbd> Limpar formulário (pede confirmação se houver dados) •
-              <kbd>Alt</kbd> + <kbd>1</kbd>…<kbd>7</kbd> (ou <kbd>Ctrl</kbd> + <kbd>1</kbd>…<kbd>6</kbd>) Trocar de tela • <kbd>/</kbd> Ir para a busca da tela
+              <kbd>Alt</kbd> + <kbd>1</kbd>…<kbd>7</kbd> (ou <kbd>Ctrl</kbd> + <kbd>1</kbd>…<kbd>6</kbd>) Trocar de tela • <kbd>/</kbd> Ir para a busca da tela • <kbd>Ctrl</kbd> + <kbd>K</kbd> Pesquisa universal (vídeos, atrizes e estúdios)
             </div>
           </details>
         </div>
@@ -714,6 +746,15 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
                     <button class="btn btn-secondary" type="button" data-action="chipAdd" data-field="w-atrizes">Adicionar</button>
                   </div>
                   <div class="chips" data-chips-list aria-label="Atrizes selecionadas"></div>
+                </div>
+                <div class="field" data-chips="w-tags">
+                  <label for="w-tags-input">Tags</label>
+                  <div class="chip-input-row">
+                    <input id="w-tags-input" class="input" list="dlTags" placeholder="Escolha uma tag da biblioteca" maxlength="80" />
+                    <button class="btn btn-secondary" type="button" data-action="chipAdd" data-field="w-tags">Adicionar</button>
+                  </div>
+                  <div class="chips" data-chips-list aria-label="Tags selecionadas"></div>
+                  <div class="field-error" data-chips-error role="alert" hidden></div>
                 </div>
                 <div class="field">
                   <label for="watchPrioridade">Prioridade</label>
@@ -887,6 +928,12 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
                   <option value="nota_desc">Nota média (maior → menor)</option>
                   <option value="nota_asc">Nota média (menor → maior)</option>
                   <option value="favoritas">Favoritas primeiro</option>
+                  <option value="hist_desc">Mais vídeos no Histórico</option>
+                  <option value="hist_asc">Menos vídeos no Histórico</option>
+                  <option value="watch_desc">Mais vídeos na Watchlist</option>
+                  <option value="watch_asc">Menos vídeos na Watchlist</option>
+                  <option value="total_desc">Mais vídeos no total</option>
+                  <option value="total_asc">Menos vídeos no total</option>
                 </select>
               </div>
               <div class="row" style="justify-content:space-between">
@@ -985,12 +1032,31 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
                 <input id="setAccent" class="input" type="color" value="#3b82f6" data-setting="accentColor" />
               </div>
               <div class="setting-row">
+                <div><label for="setTagBonus"><strong>Bônus de tags no sorteio da Watchlist</strong></label><div class="small muted">As 5 tags com melhor média no Histórico (mín. 3 vídeos) somam pontos ao peso do item: +4, +3, +2,5, +2 e +1,5 por posição (máx. +6 por item).</div><div class="small" id="topTagsInfo" style="margin-top:6px"></div></div>
+                <input id="setTagBonus" type="checkbox" data-setting="tagBonus" style="width:22px;height:22px;accent-color:var(--accent)" />
+              </div>
+              <div class="setting-row">
                 <div><label for="setMotion"><strong>Reduzir animações</strong></label><div class="small muted">Útil para uma experiência mais direta e leve.</div></div>
                 <input id="setMotion" type="checkbox" data-setting="reducedMotion" style="width:22px;height:22px;accent-color:var(--accent)" />
               </div>
             </div>
             <div class="actions end" style="margin-top:14px">
               <button class="btn btn-secondary" type="button" data-action="resetSettings">Restaurar Padrão</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><div><h3>Pesos da avaliação</h3><p>Defina quanto cada critério pesa na nota final. A soma nunca passa de 100%. Ao aplicar, as notas de todos os vídeos são recalculadas; as notas de cada critério não mudam.</p></div></div>
+            <div class="grid cols-4" id="weightsGrid"></div>
+            <div style="margin-top:var(--sp-3)">
+              <div class="row" style="justify-content:space-between"><strong>Soma: <span id="weightsSum">100%</span> <span class="muted small">(máximo 100%)</span></strong></div>
+              <div class="track" role="img" aria-label="Soma dos pesos" style="margin-top:8px"><div class="fill" id="weightsBar" style="width:100%"></div></div>
+              <p class="small muted" id="weightsMsg" style="margin-top:8px" aria-live="polite"></p>
+              <p class="small" id="weightsImpact" style="margin-top:6px" aria-live="polite"></p>
+            </div>
+            <div class="actions end" style="margin-top:14px">
+              <button class="btn btn-secondary" type="button" id="restoreWeightsBtn" data-action="restoreWeights">Restaurar padrão</button>
+              <button class="btn" type="button" id="applyWeightsBtn" data-action="applyWeights" disabled>Aplicar e recalcular notas</button>
             </div>
           </div>
 
@@ -1020,6 +1086,7 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
 
 <nav class="bottom-nav" id="bottomNav" aria-label="Navegação principal (celular)"></nav>
 <button class="fab" id="fab" type="button" aria-label="Voltar ao topo">↑</button>
+<button class="fab fab-search" id="fabSearch" type="button" data-action="openSearch" aria-label="Pesquisar vídeos, atrizes e estúdios">🔍</button>
 <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
 
 <datalist id="dlStudios"></datalist>
@@ -1036,6 +1103,17 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
     <div class="field" id="confirmField" hidden><label for="confirmInput" id="confirmInputLabel"></label><input id="confirmInput" class="input" maxlength="120" autocomplete="off" /></div>
     <div class="actions end" id="confirmActions"></div>
   </div>
+</dialog>
+
+<dialog id="searchDialog" class="modal-lg search-dialog" aria-label="Pesquisa universal">
+  <div class="modal-head">
+    <div class="search-field">
+      <span aria-hidden="true">🔍</span>
+      <input id="searchInput" class="input" type="search" role="combobox" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list" placeholder="Pesquisar vídeos, atrizes, estúdios…" autocomplete="off" />
+    </div>
+    <button class="btn btn-secondary btn-sm btn-icon" type="button" data-action="closeSearch" aria-label="Fechar pesquisa">✕</button>
+  </div>
+  <div class="modal-body" id="searchResults" role="listbox" aria-label="Resultados da pesquisa"></div>
 </dialog>
 
 <dialog id="detailDialog" class="modal-lg" aria-labelledby="detailTitle">
@@ -1073,7 +1151,7 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
 const APP_NAME = 'Projeto X - Organizador Pessoal';
 const APP_VERSION = '2.0.0';
 const BACKUP_VERSION = 6;       // v6 = datas da avaliação + grupos com id; o importador aceita v1–v6
-const SCHEMA_VERSION = 3;       // v2 = ids + tags em texto; v3 = avaliadoEm/reavaliadoEm + grupos com id
+const SCHEMA_VERSION = 4;       // v2 = ids + tags em texto; v3 = avaliadoEm/reavaliadoEm + grupos com id; v4 = pesos editáveis (padrão novo) + notas recalculadas
 const PAGE_SIZE = 40;
 
 const KEYS = Object.freeze({
@@ -1088,6 +1166,8 @@ const KEYS = Object.freeze({
   schema: 'meu_imdb_schema_version',
   preMigration: "meu_imdb_premigracao_v1",
   preMigration3: "meu_imdb_premigracao_v3",
+  preMigration4: "meu_imdb_premigracao_v4",
+  weights: "meu_imdb_pesos",
   installDismissed: 'projetoXInstallDismissed'
 });
 const IMAGE_DB = Object.freeze({ name: 'projeto_x_images_db', version: 1, store: 'atrizImages' });
@@ -1100,7 +1180,12 @@ const DEFAULT_TAGS = Object.freeze([
 ]);
 
 // Pesos da nota final (fonte única: formulário, guia e prévia leem daqui)
-const PESOS = Object.freeze({ producao: .15, performance: .10, roteiro: .05, estetica: .05, tema: .15, reassist: .15, casting: .10, sexo: .25 });
+// Pesos da nota final em PONTOS PERCENTUAIS (inteiros 0–100; soma máxima 100). Editáveis em Configurações; PESOS_PADRAO é o padrão.
+const PESOS_PADRAO = Object.freeze({ sexo: 25, tema: 15, casting: 15, performance: 10, producao: 10, reassist: 10, roteiro: 10, estetica: 5 });
+const PESOS = { ...PESOS_PADRAO };
+const BACKUP_REMINDER_DAYS = 10;                       // lembrete de backup a cada 10 dias
+const TAG_BONUS = Object.freeze({ positions: [4, 3, 2.5, 2, 1.5], cap: 6, minVideos: 3 });   // bônus fixo por posição (top 5), limite total e mínimo de vídeos por tag
+const weightsSum = w => Object.values(w).reduce((s, n) => s + n, 0);
 const PESOS_ATRIZ = Object.freeze({ performance: .20, tema: .25, reassist: .15, casting: .20, sexo: .20 });
 
 const SCORE_FIELDS = Object.freeze([
@@ -1115,40 +1200,106 @@ const SCORE_FIELDS = Object.freeze([
 ]);
 const SCORE_IDS = SCORE_FIELDS.map(f => f.id);
 
-    const descricoesNotas = {
-      producao: {
-        titulo: "Produção",
-        texto: "<strong>1:</strong> Péssima, com falhas graves em imagem, áudio ou edição.<br><strong>2:</strong> Muito ruim, difícil de assistir pela baixa qualidade técnica.<br><strong>3:</strong> Ruim, com vários problemas perceptíveis.<br><strong>4:</strong> Abaixo da média, mas ainda utilizável.<br><strong>5:</strong> Mediana, aceitável sem se destacar.<br><strong>6:</strong> Boa, com poucos problemas técnicos.<br><strong>7:</strong> Muito boa, consistente na maior parte do vídeo.<br><strong>8:</strong> Alta qualidade, bem produzida.<br><strong>9:</strong> Excelente, nível quase premium.<br><strong>10:</strong> Produção premium, impecável."
-      },
-      performance: {
-        titulo: "Performance",
-        texto: "<strong>1:</strong> Péssima, muito artificial ou sem envolvimento.<br><strong>2:</strong> Muito fraca, pouco convincente.<br><strong>3:</strong> Fraca, com pouca naturalidade.<br><strong>4:</strong> Abaixo da média, limitada em entrega.<br><strong>5:</strong> Mediana, aceitável.<br><strong>6:</strong> Boa, com momentos convincentes.<br><strong>7:</strong> Muito boa, natural na maior parte do tempo.<br><strong>8:</strong> Ótima, bastante convincente.<br><strong>9:</strong> Excelente, muito expressiva e natural.<br><strong>10:</strong> Excepcional, totalmente envolvente."
-      },
-      roteiro: {
-        titulo: "Roteiro",
-        texto: "<strong>1:</strong> Inexistente ou totalmente sem sentido.<br><strong>2:</strong> Muito confuso ou mal construído.<br><strong>3:</strong> Fraco, sem contexto relevante.<br><strong>4:</strong> Abaixo da média, pouco interessante.<br><strong>5:</strong> Básico, cumpre o mínimo.<br><strong>6:</strong> Funcional, com algum contexto útil.<br><strong>7:</strong> Bom, ajuda na construção do vídeo.<br><strong>8:</strong> Muito bom, bem organizado.<br><strong>9:</strong> Excelente, envolvente e coerente.<br><strong>10:</strong> Excepcional, muito bem construído."
-      },
-      estetica: {
-        titulo: "Estética",
-        texto: "<strong>1:</strong> Muito feia ou desagradável visualmente.<br><strong>2:</strong> Ruim, pouco atrativa.<br><strong>3:</strong> Fraca, com apelo visual baixo.<br><strong>4:</strong> Abaixo da média, sem destaque.<br><strong>5:</strong> Neutra, ok visualmente.<br><strong>6:</strong> Agradável, com boa apresentação.<br><strong>7:</strong> Boa, visualmente interessante.<br><strong>8:</strong> Muito bonita, bem composta.<br><strong>9:</strong> Excelente, com forte apelo visual.<br><strong>10:</strong> Excepcional, estética impecável."
-      },
-      tema: {
-        titulo: "Tema / Preferência",
-        texto: "<strong>1:</strong> Totalmente fora do seu gosto.<br><strong>2:</strong> Muito pouco alinhado à sua preferência.<br><strong>3:</strong> Pouco interessante para você.<br><strong>4:</strong> Abaixo do que você costuma gostar.<br><strong>5:</strong> Neutro, nem bom nem ruim para seu gosto.<br><strong>6:</strong> Relativamente alinhado ao que você gosta.<br><strong>7:</strong> Bom alinhamento com sua preferência.<br><strong>8:</strong> Muito alinhado ao seu gosto.<br><strong>9:</strong> Quase perfeito para sua preferência.<br><strong>10:</strong> Perfeito para o que você busca."
-      },
-      reassist: {
-        titulo: "Reassistibilidade",
-        texto: "<strong>1:</strong> Não veria de novo de jeito nenhum.<br><strong>2:</strong> Quase nenhum interesse em rever.<br><strong>3:</strong> Muito pouco replay value.<br><strong>4:</strong> Abaixo da média em vontade de rever.<br><strong>5:</strong> Talvez reveria, sem grande vontade.<br><strong>6:</strong> Veria novamente em alguma ocasião.<br><strong>7:</strong> Boa chance de rever.<br><strong>8:</strong> Alto interesse em reassistir.<br><strong>9:</strong> Muito alto replay value.<br><strong>10:</strong> Reassistiria várias vezes com certeza."
-      },
-      casting: {
-        titulo: "Casting",
-        texto: "<strong>1:</strong> Totalmente desalinhado com seu gosto.<br><strong>2:</strong> Muito fraco para sua preferência.<br><strong>3:</strong> Fraco, pouco interessante.<br><strong>4:</strong> Abaixo da média, sem muito apelo.<br><strong>5:</strong> Ok, aceitável.<br><strong>6:</strong> Bom, com algum destaque.<br><strong>7:</strong> Muito bom, alinhado ao seu gosto.<br><strong>8:</strong> Ótimo, bem escolhido.<br><strong>9:</strong> Excelente, muito atrativo para você.<br><strong>10:</strong> Perfeito, exatamente o que você procura."
-      },
-      sexo: {
-        titulo: "Cenas de Sexo",
-        texto: "<strong>1:</strong> Muito ruim, artificial e desconfortável de assistir.<br><strong>2:</strong> Ruim, com pouca química e baixa excitação visual.<br><strong>3:</strong> Abaixo do esperado, pouco envolvente e mal executado.<br><strong>4:</strong> Fraco, básico e previsível.<br><strong>5:</strong> Mediano, cumpre o básico sem se destacar.<br><strong>6:</strong> Bom, com execução sólida e alguns momentos interessantes.<br><strong>7:</strong> Muito bom, com química evidente e boa variedade.<br><strong>8:</strong> Excelente, natural, envolvente e agradável de assistir.<br><strong>9:</strong> Quase perfeito, muito marcante em intensidade, fluidez e dinâmica.<br><strong>10:</strong> Perfeito, química excepcional, autenticidade alta e impacto memorável."
-      }
-    };
+/* Descrições das notas (0–10). Escala comum: 0 não avaliado • 1–2 muito fraco • 3–4 abaixo do esperado • 5 aceitável • 6–7 bom • 8–9 muito bom • 10 excepcional */
+const descLista = textos => textos.map((t, i) => `<strong>${i}:</strong> ${t}`).join('<br>');
+const descricoesNotas = {
+  sexo: { titulo: "Cenas de Sexo", texto: descLista([
+    "Não avaliado.",
+    "Cena artificial ou desconfortável de assistir; sem naturalidade.",
+    "Pouca naturalidade e interação quase inexistente entre os participantes.",
+    "Interação fraca; cena mecânica e previsível do início ao fim.",
+    "Funciona, mas com pouca dinâmica e momentos que desconectam.",
+    "Aceitável: cumpre o básico, sem momentos que se destaquem.",
+    "Boa: ritmo e interação coerentes, com alguns bons momentos.",
+    "Muito consistente: boa interação e variação de ritmo.",
+    "Envolvente e natural; mantém o interesse na maior parte do tempo.",
+    "Dinâmica, fluida e marcante; poucas quebras de ritmo.",
+    "Excepcional: interação autêntica, ritmo impecável, memorável do começo ao fim."]) },
+  performance: { titulo: "Performance", texto: descLista([
+    "Não avaliado.",
+    "Sem envolvimento; atuação visivelmente forçada.",
+    "Muito pouco convincente; reações mecânicas.",
+    "Pouca naturalidade; entrega limitada.",
+    "Irregular: alguns momentos naturais, mas a maior parte é morna.",
+    "Aceitável: convence em parte, sem se destacar.",
+    "Boa: momentos convincentes e expressividade razoável.",
+    "Natural e consistente na maior parte do vídeo.",
+    "Bastante convincente; boa energia e expressividade.",
+    "Muito expressiva e natural, com entrega constante.",
+    "Totalmente envolvente; entrega impecável do início ao fim."]) },
+  casting: { titulo: "Casting", texto: descLista([
+    "Não avaliado.",
+    "Escolha totalmente fora do que você procura.",
+    "Pouco alinhado ao seu gosto; combinação sem afinidade.",
+    "Escolha fraca; as pessoas não se complementam.",
+    "Abaixo do que você costuma gostar, com algum ponto positivo.",
+    "Aceitável: nada contra, nada a favor.",
+    "Boa escolha, com boa combinação entre os perfis.",
+    "Muito boa: perfis bem alinhados ao seu gosto.",
+    "Ótima escolha; combinação com boa presença em cena.",
+    "Excelente: elenco muito atrativo e bem combinado.",
+    "Elenco ideal para o que você procura."]) },
+  tema: { titulo: "Tema / Preferência", texto: descLista([
+    "Não avaliado.",
+    "Tema que você não quer ver.",
+    "Muito pouco alinhado à sua preferência.",
+    "Tema pouco interessante; proposta confusa.",
+    "Abaixo do que você costuma gostar, mas tolerável.",
+    "Neutro: não agrega nem atrapalha.",
+    "Relativamente interessante; a proposta se sustenta.",
+    "Bem alinhado ao seu gosto; entrega o que promete.",
+    "Muito interessante e coerente do início ao fim.",
+    "Quase perfeito para a sua preferência.",
+    "Exatamente o tipo de tema que você busca."]) },
+  producao: { titulo: "Produção", texto: descLista([
+    "Não avaliado.",
+    "Falhas graves de imagem, áudio ou edição.",
+    "Qualidade técnica muito baixa; difícil de assistir.",
+    "Vários problemas perceptíveis (foco, luz, ruído ou cortes).",
+    "Utilizável, mas com falhas que incomodam.",
+    "Aceitável: sem problemas graves, sem se destacar.",
+    "Boa: poucos problemas técnicos.",
+    "Muito boa: imagem e áudio consistentes.",
+    "Alta qualidade: imagem nítida, bom áudio e edição fluida.",
+    "Excelente acabamento técnico.",
+    "Impecável do ponto de vista técnico."]) },
+  estetica: { titulo: "Estética", texto: descLista([
+    "Não avaliado.",
+    "Visual desagradável.",
+    "Pouco atrativo; cenário e composição descuidados.",
+    "Apelo visual baixo.",
+    "Sem destaque; poucos elementos agradáveis.",
+    "Neutro: visualmente correto.",
+    "Agradável, com boa apresentação.",
+    "Bonito e bem composto.",
+    "Muito bonito; cenário e figurino bem escolhidos.",
+    "Forte apelo visual.",
+    "Visual excepcional e coeso."]) },
+  roteiro: { titulo: "Roteiro", texto: descLista([
+    "Não avaliado (ou sem roteiro e sem expectativa de ter).",
+    "Sem sentido ou sem contexto algum.",
+    "Muito confuso ou mal construído.",
+    "Fraco; contexto superficial.",
+    "Pouco interessante, mas compreensível.",
+    "Básico: cumpre o mínimo.",
+    "Funcional, com algum contexto útil.",
+    "Bom: o contexto ajuda a sustentar o vídeo.",
+    "Muito bom: bem organizado e integrado ao tema.",
+    "Excelente: envolvente e coerente.",
+    "Excepcional: bem construído do início ao fim."]) },
+  reassist: { titulo: "Reassistibilidade", texto: descLista([
+    "Não avaliado.",
+    "Não reveria.",
+    "Quase nenhum interesse em rever.",
+    "Reveria só por curiosidade, de forma rara.",
+    "Poderia rever trechos, mas não o vídeo inteiro.",
+    "Talvez reveria, sem grande vontade.",
+    "Reveria em alguma ocasião.",
+    "Boa chance de rever o vídeo inteiro.",
+    "Alto interesse em rever com frequência.",
+    "Forte candidato a favorito.",
+    "Reveria várias vezes, com certeza."]) }
+};
 
 const PRIORIDADES = Object.freeze([
   { value: 'Muito Alta', peso: 10, cls: 'prio-muito-alta' },
@@ -1160,8 +1311,8 @@ const PRIORIDADES = Object.freeze([
 const PRIO_MAP = new Map(PRIORIDADES.map(p => [p.value, p]));
 const prioInfo = v => PRIO_MAP.get(v) || PRIO_MAP.get('Média');
 
-const DEFAULT_SETTINGS = Object.freeze({ density: 'comfortable', listMode: 'compact', fontSize: 'normal', accentColor: '#3b82f6', reducedMotion: false });
-const DEFAULT_PREFS = Object.freeze({ lastSection: 'cadastro', histSort: 'nota_desc', watchSort: 'prioridade', atrizSort: 'nome_asc', collapsed: {}, lastBackupAt: '' });
+const DEFAULT_SETTINGS = Object.freeze({ density: 'comfortable', listMode: 'compact', fontSize: 'normal', accentColor: '#3b82f6', reducedMotion: false, tagBonus: true });
+const DEFAULT_PREFS = Object.freeze({ lastSection: 'cadastro', histSort: 'nota_desc', watchSort: 'prioridade', atrizSort: 'nome_asc', collapsed: {}, lastBackupAt: '', backupSnoozeUntil: '' });
 
 const SECTIONS = Object.freeze([
   { id: 'cadastro', label: 'Cadastrar / Editar', short: 'Cadastro', icon: '✍️', primary: true },
@@ -1358,9 +1509,31 @@ const formatDate = iso => { const y = ymdOf(iso); return y ? `${y.slice(8, 10)}/
 const MONTHS_PT = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
 const monthLabel = ym => { const [y, m] = ym.split('-'); return `${MONTHS_PT[Number(m) - 1]} de ${y}`; };
 
-function calcNota(v) { return round2(SCORE_IDS.reduce((sum, k) => sum + scoreNum(v[k]) * PESOS[k], 0)); }
+// Média ponderada normalizada pela soma dos pesos: a nota fica sempre na escala 0–10 (com soma 100 equivale a Σ nota × peso/100)
+function calcNotaCom(v, w) { const total = weightsSum(w); return total > 0 ? round2(SCORE_IDS.reduce((sum, k) => sum + scoreNum(v[k]) * w[k], 0) / total) : 0; }
+const calcNota = v => calcNotaCom(v, PESOS);
+// Itens importados só com a nota (sem nenhuma nota por critério) não podem ser recalculados: mantêm a nota original
+const hasScores = v => SCORE_IDS.some(k => scoreNum(v[k]) > 0);
+function normalizeWeights(raw) {
+  const out = {};
+  SCORE_IDS.forEach(k => { const n = Math.round(Number(raw?.[k])); out[k] = Number.isFinite(n) ? clamp(n, 0, 100) : null; });
+  const ok = SCORE_IDS.every(k => out[k] !== null) && weightsSum(out) > 0 && weightsSum(out) <= 100;
+  return ok ? out : { ...PESOS_PADRAO };
+}
+function recalcAllNotas() { let n = 0; state.videos.forEach(v => { if (!hasScores(v)) return; const nova = calcNota(v); if (nova !== v.nota) { v.nota = nova; n++; } }); return n; }
 function calcNotaAtriz(v) { return round2(Object.keys(PESOS_ATRIZ).reduce((sum, k) => sum + scoreNum(v[k]) * PESOS_ATRIZ[k], 0)); }
-function noteClass(n) { n = Number(n) || 0; return n < 5 ? 'note-low' : n < 7 ? 'note-mid' : n < 8.5 ? 'note-good' : 'note-top'; }
+// Faixas de nota (fonte única: cor dos cartões, legenda e histograma). Limite inferior inclusivo.
+const NOTE_BANDS = Object.freeze([
+  { cls: 'note-b1', min: 0, label: 'Fraco', range: '0 – 3,99' },
+  { cls: 'note-b2', min: 4, label: 'Abaixo da média', range: '4 – 5,49' },
+  { cls: 'note-b3', min: 5.5, label: 'Regular', range: '5,5 – 6,49' },
+  { cls: 'note-b4', min: 6.5, label: 'Bom', range: '6,5 – 7,49' },
+  { cls: 'note-b5', min: 7.5, label: 'Muito bom', range: '7,5 – 8,49' },
+  { cls: 'note-b6', min: 8.5, label: 'Excelente', range: '8,5 – 9,49' },
+  { cls: 'note-b7', min: 9.5, label: 'Excepcional', range: '9,5 – 10' }
+]);
+const noteBand = n => { n = Number(n) || 0; let b = NOTE_BANDS[0]; for (const x of NOTE_BANDS) if (n >= x.min) b = x; return b; };
+const noteClass = n => noteBand(n).cls;
 
 function normalizeVideo(raw) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
@@ -1443,7 +1616,8 @@ function normalizeSettings(raw) {
     listMode: r.listMode === 'detailed' ? 'detailed' : 'compact',
     fontSize: r.fontSize === 'large' ? 'large' : 'normal',
     accentColor: hex,
-    reducedMotion: !!r.reducedMotion
+    reducedMotion: !!r.reducedMotion,
+    tagBonus: r.tagBonus !== false       // bônus das tags mais bem avaliadas no sorteio da Watchlist (ligado por padrão)
   };
 }
 function normalizePrefs(raw) {
@@ -1453,18 +1627,19 @@ function normalizePrefs(raw) {
     lastSection: pick(r.lastSection, MAIN_IDS, 'cadastro'),
     histSort: pick(r.histSort, ['nota_desc', 'nota_asc', 'recentes', 'antigos', 'aval_desc', 'aval_asc', 'az', 'za'], 'nota_desc'),
     watchSort: pick(r.watchSort, ['prioridade', 'recentes', 'antigos', 'az'], 'prioridade'),
-    atrizSort: pick(r.atrizSort, ['nome_asc', 'nome_desc', 'nota_desc', 'nota_asc', 'favoritas'], 'nome_asc'),
+    atrizSort: pick(r.atrizSort, ['nome_asc', 'nome_desc', 'nota_desc', 'nota_asc', 'favoritas', 'hist_desc', 'hist_asc', 'watch_desc', 'watch_asc', 'total_desc', 'total_asc'], 'nome_asc'),
     tagSort: pick(r.tagSort, ['nome', 'uso', 'sem_uso'], 'nome'),
     monthRange: pick(String(r.monthRange), ['12', '24', 'all'], '12'),
     collapsed: r.collapsed && typeof r.collapsed === 'object' ? r.collapsed : {},
-    lastBackupAt: validDate(r.lastBackupAt)
+    lastBackupAt: validDate(r.lastBackupAt),
+    backupSnoozeUntil: validDate(r.backupSnoozeUntil)
   };
 }
 const asArray = v => (Array.isArray(v) ? v : []);
 
 function loadAll() {
   const ver = Number(Store.getRaw(KEYS.schema) || 1);
-  const snapKey = ver < 2 ? KEYS.preMigration : KEYS.preMigration3;
+  const snapKey = ver < 2 ? KEYS.preMigration : ver < 3 ? KEYS.preMigration3 : KEYS.preMigration4;
   if (ver < SCHEMA_VERSION && Store.getRaw(snapKey) == null && (Store.getRaw(KEYS.videos) || Store.getRaw(KEYS.watchlist))) {
     // cópia de segurança dos dados brutos antes da migração (vídeos, watchlist e grupos — pequenos)
     Store.setRaw(snapKey, JSON.stringify({ savedAt: nowIso(), videos: Store.getRaw(KEYS.videos), watchlist: Store.getRaw(KEYS.watchlist), groups: Store.getRaw(KEYS.studioGroups) }));
@@ -1478,8 +1653,12 @@ function loadAll() {
   state.collapsedGroups = uniqueCI(asArray(readJson(KEYS.collapsedGroups, [])).map(str));
   state.settings = normalizeSettings(readJson(KEYS.settings, {}));
   state.prefs = normalizePrefs(readJson(KEYS.prefs, {}));
+  // pesos: usa os salvos; sem pesos salvos = padrão novo. Na migração v4 todas as notas são recalculadas com os pesos vigentes (os critérios de cada vídeo ficam intactos)
+  const savedW = readJson(KEYS.weights, null);
+  Object.assign(PESOS, savedW ? normalizeWeights(savedW) : PESOS_PADRAO);
+  if (ver < 4) recalcAllNotas();
   if (ver < SCHEMA_VERSION) {
-    persist('videos', 'watchlist', 'atrizes', 'tags', 'groups', 'collapsed', 'settings', 'prefs');
+    persist('videos', 'watchlist', 'atrizes', 'tags', 'groups', 'collapsed', 'settings', 'prefs', 'weights');
     Store.setRaw(KEYS.schema, String(SCHEMA_VERSION));
   }
   state.rev++;
@@ -1501,7 +1680,8 @@ const persisters = {
   groups: () => writeJson(KEYS.studioGroups, state.studioGroups),
   collapsed: () => writeJson(KEYS.collapsedGroups, state.collapsedGroups),
   settings: () => writeJson(KEYS.settings, state.settings),
-  prefs: () => writeJson(KEYS.prefs, state.prefs)
+  prefs: () => writeJson(KEYS.prefs, state.prefs),
+  weights: () => writeJson(KEYS.weights, PESOS)
 };
 function persist(...kinds) { return kinds.map(k => persisters[k]()).every(Boolean); }
 
@@ -1626,7 +1806,7 @@ const defaultFilters = () => ({
   dash: { studio: '', atriz: '' },
   // inc/exc: filtros de inclusão/exclusão {t: tag|studio|group|atriz|video, v, label}. Exclusões valem só para a lista/sorteio atual.
   hist: { busca: '', min: '', max: '', from: '', to: '', fav: false, inc: [], exc: [], tagMode: 'and', atrizMode: 'and' },
-  watch: { busca: '', prio: '', inc: [], exc: [], atrizMode: 'and' },
+  watch: { busca: "", prio: "", inc: [], exc: [], tagMode: "and", atrizMode: "and" },
   atriz: { busca: '', fav: false }
 });
 const ui = {
@@ -1637,7 +1817,7 @@ const ui = {
   editingId: null, editingWatchId: null, pendingWatchId: null,
   drawn: { hist: '', watch: '' },
   auto: { hist: { nome: '', studio: '', atriz: '' }, watch: { nome: '', studio: '', atriz: '' } },
-  chips: { 'v-atrizes': { kind: 'people', values: [] }, 'v-tags': { kind: 'tags', values: [] }, 'w-atrizes': { kind: 'people', values: [] } },
+  chips: { 'v-atrizes': { kind: 'people', values: [] }, 'v-tags': { kind: 'tags', values: [] }, 'w-atrizes': { kind: 'people', values: [] }, 'w-tags': { kind: 'tags', values: [] } },
   cropper: null
 };
 
@@ -1663,13 +1843,22 @@ function getIndex() {
   });
   idx.studios = [...studios.values()].sort((a, b) => cmp(a.name, b.name));
 
+  // uso das tags: Histórico e Watchlist compartilham o mesmo catálogo (nenhum sistema paralelo)
   const tagUse = new Map();
-  state.videos.forEach(v => splitList(v.tags).forEach(t => {
-    const k = fold(t), e = tagUse.get(k);
-    if (e) e.count++; else tagUse.set(k, { name: t, count: 1 });
-  }));
+  const addTag = (t, key) => { const k = fold(t), e = tagUse.get(k) || { name: t, hist: 0, watch: 0 }; e[key]++; tagUse.set(k, e); };
+  state.videos.forEach(v => splitList(v.tags).forEach(t => addTag(t, "hist")));
+  state.watchlist.forEach(w => splitList(w.tags).forEach(t => addTag(t, "watch")));
   idx.tagsUsed = [...tagUse.values()].map(t => t.name).sort(cmp);
-  idx.tagCount = name => tagUse.get(fold(name))?.count || 0;
+  idx.tagCount = name => { const e = tagUse.get(fold(name)); return e ? e.hist + e.watch : 0; };
+  idx.tagCountHist = name => tagUse.get(fold(name))?.hist || 0;
+  idx.tagCountWatch = name => tagUse.get(fold(name))?.watch || 0;
+  // Top tags mais bem avaliadas: média das notas do Histórico suavizada (n/(n+5)) para uma tag com 1 vídeo nota 10 não vencer uma com muitos vídeos bons
+  const tagScores = new Map();
+  state.videos.forEach(v => splitList(v.tags).forEach(t => { const k = fold(t), e = tagScores.get(k) || { name: t, total: 0, n: 0 }; e.total += v.nota; e.n++; tagScores.set(k, e); }));
+  idx.topTags = new Map();
+  [...tagScores.values()].filter(e => e.n >= TAG_BONUS.minVideos).map(e => ({ ...e, avg: e.total / e.n, score: (e.n / (e.n + 5)) * (e.total / e.n) }))
+    .sort((a, b) => b.score - a.score || cmp(a.name, b.name)).slice(0, TAG_BONUS.positions.length)
+    .forEach((e, i) => idx.topTags.set(fold(e.name), { ...e, pos: i + 1, bonus: TAG_BONUS.positions[i] }));
 
   const at = new Map();
   const ensure = name => {
@@ -1683,6 +1872,9 @@ function getIndex() {
   state.watchlist.forEach(w => splitList(w.atrizes).forEach(n => ensure(n).watch.push(w)));
   at.forEach(e => {
     const n = e.hist.length;
+    const histLinks = new Set(e.hist.map(v => linkKey(v.link)).filter(Boolean));
+    const overlap = e.watch.filter(w => { const k = linkKey(w.link); return k && histLinks.has(k); }).length;
+    e.total = n + e.watch.length - overlap;
     if (n) { e.rawAvg = round2(e.sum / n); e.media = round2((n / (n + 5)) * (e.sum / n)); }
   });
   idx.atrizes = at;
@@ -1772,11 +1964,11 @@ function getFacetOptions(scope) {
   const c = _facetCache[scope];
   if (c && c.rev === state.rev) return c.list;
   const items = scope === 'hist' ? state.videos : state.watchlist, list = [];
-  if (scope === 'hist') {
+  {
     const use = new Map();
     items.forEach(v => splitList(v.tags).forEach(t => { const k = fold(t); use.set(k, { name: t, n: (use.get(k)?.n || 0) + 1 }); }));
     state.tagCatalog.forEach(t => { if (!use.has(fold(t))) use.set(fold(t), { name: t, n: 0 }); });
-    use.forEach(e => list.push({ t: 'tag', v: e.name, label: e.name, count: e.n }));
+    use.forEach(e => list.push({ t: "tag", v: e.name, label: e.name, count: e.n }));
   }
   const st = new Map();
   items.forEach(it => { if (it.studio) { const k = fold(it.studio); st.set(k, { name: it.studio, n: (st.get(k)?.n || 0) + 1 }); } });
@@ -1846,7 +2038,13 @@ function sortAtrizes(list, mode) {
   const a = [...list];
   const byName = (x, y) => cmp(x.nome, y.nome);
   if (mode === 'nome_desc') a.sort((x, y) => byName(y, x));
-  else if (mode === 'nota_desc') a.sort((x, y) => (y.media ?? -1) - (x.media ?? -1) || byName(x, y));
+  else if (mode === "hist_desc") a.sort((x, y) => y.hist.length - x.hist.length || y.total - x.total || byName(x, y));
+  else if (mode === "hist_asc") a.sort((x, y) => x.hist.length - y.hist.length || x.total - y.total || byName(x, y));
+  else if (mode === "watch_desc") a.sort((x, y) => y.watch.length - x.watch.length || y.total - x.total || byName(x, y));
+  else if (mode === "watch_asc") a.sort((x, y) => x.watch.length - y.watch.length || x.total - y.total || byName(x, y));
+  else if (mode === "total_desc") a.sort((x, y) => y.total - x.total || byName(x, y));
+  else if (mode === "total_asc") a.sort((x, y) => x.total - y.total || byName(x, y));
+  else if (mode === "nota_desc") a.sort((x, y) => (y.media ?? -1) - (x.media ?? -1) - (x.media ?? -1) || byName(x, y));
   else if (mode === 'nota_asc') a.sort((x, y) => (x.media ?? 999) - (y.media ?? 999) || byName(x, y));
   else if (mode === 'favoritas') a.sort((x, y) => Number(!!y.cadastro?.favorita) - Number(!!x.cadastro?.favorita) || byName(x, y));
   else a.sort(byName);
@@ -1875,7 +2073,18 @@ function pickWeighted(items, weightFn) {
   return items[items.length - 1];
 }
 const favoriteNamesIn = text => splitList(text).filter(n => getIndex().favSet.has(atrizKey(n)));
-const watchWeight = w => prioInfo(w.prioridade).peso + Math.min(8, favoriteNamesIn(w.atrizes).length * 4);
+// Componentes do peso no sorteio da Watchlist: prioridade + atrizes favoritas (+4 cada, máx. +8) + tags top 5 (bônus fixo por posição, máx. +6)
+function watchWeightParts(w) {
+  const parts = [{ label: `Prioridade ${w.prioridade}`, value: prioInfo(w.prioridade).peso }];
+  const favs = favoriteNamesIn(w.atrizes).length;
+  if (favs) parts.push({ label: favs > 1 ? "atrizes favoritas" : "atriz favorita", value: Math.min(8, favs * 4) });
+  if (state.settings.tagBonus) {
+    const hits = splitList(w.tags).map(t => getIndex().topTags.get(fold(t))).filter(Boolean).sort((a, b) => a.pos - b.pos);
+    if (hits.length) parts.push({ label: hits.map(h => `${h.name} (top ${h.pos})`).join(", "), value: Math.min(TAG_BONUS.cap, hits.reduce((s, h) => s + h.bonus, 0)) });
+  }
+  return parts;
+}
+const watchWeight = w => watchWeightParts(w).reduce((s, p) => s + p.value, 0);
 const histWeight = v => Math.max(.1, (Number(v.reassist) || 0) * .6 + (Number(v.nota) || 0) * .4);
 
 const peopleSummary = (text, limit = 2) => {
@@ -2157,7 +2366,19 @@ function updateSuggestions() {
   // sugestões da busca: studios, atrizes, tags e os 150 nomes mais recentes (evita milhares de <option> em bibliotecas grandes)
   setDatalist('dlHist', uniqueCI([...state.videos.slice(-150).map(v => v.nome), ...studios, ...idx.atrizNames, ...idx.tagsUsed]).sort(cmp));
 }
+// Lembrete: aparece quando o último backup tem 10 dias ou mais (ou nunca houve backup e já existem dados); "Lembrar amanhã" adia por 24 h
+function updateBackupReminder() {
+  const el = byId('backupReminder'); if (!el) return;
+  const hasData = state.videos.length + state.watchlist.length + state.atrizes.length > 0;
+  const last = state.prefs.lastBackupAt ? Date.parse(state.prefs.lastBackupAt) : 0;
+  const days = last ? Math.floor((Date.now() - last) / 86400000) : null;
+  const snoozed = state.prefs.backupSnoozeUntil && Date.parse(state.prefs.backupSnoozeUntil) > Date.now();
+  const due = hasData && !snoozed && (days === null || days >= BACKUP_REMINDER_DAYS);
+  el.hidden = !due;
+  if (due) setText('backupReminderText', days === null ? 'Você ainda não fez nenhum backup. Seus dados ficam só neste navegador — exporte uma cópia para não correr o risco de perdê-los.' : `Faz ${days} dias desde o último backup (lembrete a cada ${BACKUP_REMINDER_DAYS} dias). Exporte uma cópia dos seus dados.`);
+}
 function updateBackupInfo() {
+  updateBackupReminder();
   const last = state.prefs.lastBackupAt ? formatDateTime(state.prefs.lastBackupAt) : '';
   setText('backupStamp', `Último backup: ${last || 'nunca'}`);
   setText('backupLast', last || 'Nunca (recomendamos exportar um backup)');
@@ -2173,19 +2394,25 @@ function buildStaticUi() {
   byId('scoreGrid').innerHTML = SCORE_FIELDS.map(f => {
     const d = descricoesNotas[f.id] || { titulo: f.label, texto: '' };
     return `<div class="field score-field">
-      <label for="sc-${f.id}">${esc(f.label)} <span class="muted">(${Math.round(PESOS[f.id] * 100)}%)</span></label>
+      <label for="sc-${f.id}">${esc(f.label)} <span class="muted" data-w="${f.id}">(${PESOS[f.id]}%)</span></label>
       <input id="sc-${f.id}" class="input" type="number" inputmode="decimal" min="0" max="10" step="1" value="0" data-score="${f.id}" aria-describedby="help-${f.id}" />
       <div class="score-help" id="help-${f.id}"><strong>${esc(d.titulo)}</strong><br>${d.texto}</div>
     </div>`;
   }).join('');
+  byId('noteLegend').innerHTML = NOTE_BANDS.map(b => `<span class="dot ${b.cls}"></span><span>${b.range}</span><span class="muted">${b.label}</span>`).join('');
   byId('guideGrid').innerHTML = SCORE_FIELDS.map(f =>
-    `<div class="guide-item"><h4>${esc(f.label)} (${Math.round(PESOS[f.id] * 100)}%)</h4><ul>${f.guide.map(g => `<li>${esc(g)}</li>`).join('')}</ul></div>`).join('');
+    `<div class="guide-item"><h4>${esc(f.label)} <span data-gw="${f.id}">(${PESOS[f.id]}%)</span></h4><ul>${f.guide.map(g => `<li>${esc(g)}</li>`).join('')}</ul></div>`).join('');
   const opts = PRIORIDADES.map(p => `<option value="${esc(p.value)}">${esc(p.value)}</option>`).join('');
   byId('watchPrioridade').innerHTML = opts;
   byId('watchPrioridade').value = 'Média';
   byId('watchFiltroPrio').innerHTML = `<option value="">Todas</option>${opts}`;
-  byId('notaDetail').textContent = SCORE_FIELDS.map(f => `${f.label} ${Math.round(PESOS[f.id] * 100)}%`).join(' • ');
-  ['v-atrizes', 'v-tags', 'w-atrizes'].forEach(chipRender);
+  refreshWeightLabels();
+  ['v-atrizes', 'v-tags', 'w-atrizes', 'w-tags'].forEach(chipRender);
+}
+// Atualiza os percentuais mostrados no formulário, no guia e na prévia quando os pesos mudam
+function refreshWeightLabels() {
+  SCORE_FIELDS.forEach(f => { $$(`[data-w="${f.id}"],[data-gw="${f.id}"]`).forEach(el => { el.textContent = `(${PESOS[f.id]}%)`; }); });
+  byId('notaDetail').textContent = SCORE_FIELDS.map(f => `${f.label} ${PESOS[f.id]}%`).join(' • ');
 }
 function readScores() {
   const s = {};
@@ -2210,7 +2437,7 @@ function isVideoFormDirty() {
 }
 function isWatchFormDirty() {
   return !!(str(byId('watchNome').value) || str(byId('watchStudio').value) || str(byId('watchLink').value) ||
-    ui.chips['w-atrizes'].values.length || str(byId('w-atrizes-input').value) || byId('watchPrioridade').value !== 'Média');
+    ui.chips['w-atrizes'].values.length || ui.chips['w-tags'].values.length || str(byId('w-atrizes-input').value) || str(byId('w-tags-input').value) || byId('watchPrioridade').value !== 'Média');
 }
 function fillVideoForm(v) {
   byId('nome').value = v.nome || '';
@@ -2246,7 +2473,7 @@ function resetWatchForm() {
   ui.auto.watch = { nome: '', studio: '', atriz: '' };
   byId('watchNome').value = ''; byId('watchStudio').value = ''; byId('watchLink').value = '';
   byId('watchPrioridade').value = 'Média'; byId('w-atrizes-input').value = '';
-  chipSet('w-atrizes', []);
+  chipSet('w-atrizes', []); chipSet('w-tags', []); byId('w-tags-input').value = '';
   fieldError('watchNome', ''); fieldError('watchLink', '');
   byId('addWatchBtn').textContent = 'Adicionar à Lista';
   setText('watchFormStatus', 'Novo item');
@@ -2297,16 +2524,13 @@ Views.dashboard = () => {
     byId('topAtrizes').innerHTML = emptyHtml('Sem dados', 'Os rankings aparecem depois dos primeiros cadastros.');
     return;
   }
-  const bands = [
-    { label: '0.00 – 4.99', cls: 'note-low', min: 0, max: 5 }, { label: '5.00 – 6.99', cls: 'note-mid', min: 5, max: 7 },
-    { label: '7.00 – 8.49', cls: 'note-good', min: 7, max: 8.5 }, { label: '8.50 – 10.00', cls: 'note-top', min: 8.5, max: 10.0001 }
-  ].map(b => ({ ...b, total: list.filter(v => v.nota >= b.min && v.nota < b.max).length }));
+  const bands = NOTE_BANDS.map((b, i) => ({ ...b, total: list.filter(v => noteBand(v.nota) === b).length }));
   const max = Math.max(...bands.map(b => b.total), 1);
   byId('histogram').innerHTML = list.length
     ? `<div class="histogram">${bands.map(b => `
-        <div class="hcard ${b.cls}" role="img" aria-label="${esc(b.label)}: ${plural(b.total, 'vídeo', 'vídeos')}">
+        <div class="hcard ${b.cls}" role="img" aria-label="${esc(b.label)} (${esc(b.range)}): ${plural(b.total, 'vídeo', 'vídeos')}">
           <div class="hbar-wrap"><div class="hbar" style="height:${Math.max(4, (b.total / max) * 100)}%"></div></div>
-          <div class="hvalue">${b.total}</div><div class="small">${b.label}</div><div class="small muted">${b.total === 1 ? 'vídeo' : 'vídeos'}</div>
+          <div class="hvalue">${b.total}</div><div class="small" style="font-weight:700">${b.label}</div><div class="small muted">${b.range}</div>
         </div>`).join('')}</div>`
     : emptyHtml('Nenhum vídeo com estes filtros', 'Ajuste ou limpe os filtros do dashboard.', `<button type="button" class="btn btn-secondary" data-action="clearFilters" data-scope="dash">Limpar filtros</button>`);
 
@@ -2402,6 +2626,7 @@ function watchCard(w) {
         ${favs.length ? `<span class="chip chip--fav">★ ${esc(favs.slice(0, 2).join(', '))}${favs.length > 2 ? ` +${favs.length - 2}` : ''}</span>` : ''}
         ${w.link ? '<span class="chip">Link salvo</span>' : ''}
       </div>
+      ${chipListHtml(w.tags, detailed ? 6 : 3, 'item-tags') || (detailed ? '<div class="small muted" style="margin-top:10px">Sem tags</div>' : '')}
       ${detailed && link ? `<div class="link-text" style="margin-top:10px">${esc(w.link)}</div>` : ''}
     </div>
     <div class="item-actions">
@@ -2438,7 +2663,7 @@ function renderFilterBar(elId, scope, items) {
     <button type="button" data-action="setMode" data-scope="${scope}" data-which="${which}" data-value="and" aria-pressed="${mode === 'and'}">${which === 'tag' ? 'Todas as tags' : 'Todas as atrizes'}</button>
     <button type="button" data-action="setMode" data-scope="${scope}" data-which="${which}" data-value="or" aria-pressed="${mode === 'or'}">Qualquer uma</button></span>`;
   const modes = [];
-  if (scope === 'hist' && f.inc && f.inc.filter(x => x.t === 'tag').length > 1) modes.push(seg('tag', f.tagMode));
+  if (f.inc && f.inc.filter(x => x.t === 'tag').length > 1) modes.push(seg('tag', f.tagMode));
   if (f.inc && f.inc.filter(x => x.t === 'atriz').length > 1) modes.push(seg('atriz', f.atrizMode));
   const hasExc = exc.length > 0, hasInc = inc.length > 0;
   el.innerHTML = (hasInc ? `<div class="filter-group"><span class="lbl">Filtros</span>${inc.map(chip).join('')}${modes.join('')}</div>` : '') +
@@ -2546,7 +2771,7 @@ function renderDrawn(kind) {
       <h3 style="margin-top:6px;overflow-wrap:anywhere">${esc(item.nome)}</h3>
       <div class="muted">${esc(item.studio || 'Sem studio')}${item.atrizes ? ' • ' + esc(item.atrizes) : ''}</div>
       <div class="item-meta"><span class="badge ${p.cls}">Prioridade: ${esc(item.prioridade)}</span>${favs.length ? `<span class="chip chip--fav">★ ${esc(favs.join(', '))}</span>` : ''}</div>
-      <p class="small muted" style="margin-top:10px">Peso no sorteio: <strong>${watchWeight(item).toFixed(1)}</strong> (prioridade${favs.length ? ' + bônus de atriz favorita' : ''}).</p>
+      <p class="small muted" style="margin-top:10px">Peso no sorteio: <strong>${watchWeight(item).toFixed(1)}</strong> = ${watchWeightParts(item).map(p => `${esc(p.label)} +${p.value}`).join(' · ')}.</p>
       <div class="actions" style="margin-top:14px">
         ${safeHref(item.link) ? `<button type="button" class="btn btn-secondary" data-action="openLink" data-url="${esc(safeHref(item.link))}">Abrir Vídeo</button>` : ''}
         <button type="button" class="btn btn-secondary" data-action="editWatch" data-id="${esc(item.id)}">Editar</button>
@@ -2588,7 +2813,7 @@ Views.atrizes = () => {
         <button type="button" class="atriz-name" data-action="openAtriz" data-name="${nome}">${nome}</button>
         ${fav ? '<div><span class="chip chip--fav">★ Favorita</span></div>' : ''}
         <div class="small muted">Nota média: <strong>${e.media !== null ? e.media.toFixed(2) : '—'}</strong></div>
-        <div class="small muted">Histórico: <strong>${e.hist.length}</strong> • Watchlist: <strong>${e.watch.length}</strong></div>
+        <div class="small muted">Histórico: <strong>${e.hist.length}</strong> • Watchlist: <strong>${e.watch.length}</strong> • Total: <strong>${e.total}</strong></div>
       </div>
       <div class="item-actions" style="flex-wrap:nowrap">
         <button type="button" class="btn btn-secondary btn-sm btn-icon" data-action="toggleAtrizFav" data-name="${nome}" aria-pressed="${fav}" aria-label="${fav ? 'Remover dos favoritos' : 'Favoritar'}: ${nome}" title="${fav ? 'Remover dos favoritos' : 'Favoritar'}">${fav ? '★' : '☆'}</button>
@@ -2619,8 +2844,9 @@ function renderTagsPanel() {
   else list.sort((a, b) => cmp(a.name, b.name));
   byId('tagLibraryList').innerHTML = rows.length ? (list.length ? list.map(r => `
     <span class="lib-chip" ${r.count ? '' : 'style="opacity:.78"'}>
-      <button type="button" class="chip-x" style="width:auto;background:none;padding:0 2px;font-size:inherit;font-weight:700;color:inherit" data-action="openTag" data-tag="${esc(r.name)}" title="Ver vídeos com esta tag" ${r.count ? '' : 'disabled'}>${esc(r.name)}</button>
-      <small>${r.count ? `(${r.count})` : '(sem uso)'}</small>
+      <button type="button" class="chip-x" style="width:auto;background:none;padding:0 2px;font-size:inherit;font-weight:700;color:inherit" data-action="openTag" data-tag="${esc(r.name)}" title="Ver vídeos do Histórico com esta tag" ${idx.tagCountHist(r.name) ? '' : 'disabled'}>${esc(r.name)}</button>
+      <small>${r.count ? `(Hist. ${idx.tagCountHist(r.name)} · Fila ${idx.tagCountWatch(r.name)})` : '(sem uso)'}</small>
+      ${idx.tagCountWatch(r.name) ? `<button type="button" class="chip-x" style="width:auto;padding:0 6px" data-action="openTagWatch" data-tag="${esc(r.name)}" title="Ver itens da Watchlist com esta tag" aria-label="Ver na Watchlist os itens com a tag ${esc(r.name)}">Fila</button>` : ''}
       <button type="button" class="chip-x" data-action="renameTag" data-tag="${esc(r.name)}" aria-label="Renomear tag ${esc(r.name)}" title="Renomear / mesclar">✎</button>
       <button type="button" class="chip-x" data-action="removeLibraryTag" data-tag="${esc(r.name)}" aria-label="Remover tag ${esc(r.name)}">×</button>
     </span>`).join('') : emptyHtml('Nenhuma tag encontrada', 'Tente outro termo de busca.')) : emptyHtml('Nenhuma tag', 'Adicione tags para padronizar suas avaliações.');
@@ -2718,7 +2944,14 @@ Views.biblioteca = () => {
 };
 
 /* ---------- Configurações ---------- */
-Views.configuracoes = () => { applyTheme(); updateBackupInfo(); };
+Views.configuracoes = () => { applyTheme(); updateBackupInfo(); renderWeights(); renderTopTagsInfo(); };
+function renderTopTagsInfo() {
+  const el = byId('topTagsInfo'); if (!el) return;
+  const tags = [...getIndex().topTags.values()];
+  el.textContent = tags.length
+    ? `Top atual: ${tags.map(t => `${t.pos}º ${t.name} (média ${round2(t.avg).toFixed(2)}, ${t.n} vídeos, +${t.bonus})`).join(' • ')}`
+    : `Ainda não há tags com pelo menos ${TAG_BONUS.minVideos} vídeos avaliados.`;
+}
 
 /* ---------- Página do vídeo ---------- */
 Views.video = () => {
@@ -2760,7 +2993,7 @@ Views.video = () => {
           ${isH ? `<div class="kv-item"><div class="kv-label">Data da avaliação</div>${esc(evalDate)}</div>` : ''}
           <div class="kv-item"><div class="kv-label">Studio</div>${esc(item.studio || '—')}</div>
           <div class="kv-item"><div class="kv-label">Atrizes</div>${atrizLinks ? `<div class="chips">${atrizLinks}</div>` : '—'}</div>
-          <div class="kv-item"><div class="kv-label">Tags</div>${chipListHtml(item.tags, 99) || '—'}</div>
+          <div class="kv-item"><div class="kv-label">Tags</div>${chipListHtml(item.tags, 99) || '<span class="muted">Sem tags</span>'}</div>
           <div class="kv-item"><div class="kv-label">Link completo</div>${item.link ? `<div class="link-text">${esc(item.link)}</div>` : '—'}</div>
         </div>
         <div class="actions" style="margin-top:14px">
@@ -2904,7 +3137,7 @@ Views.atriz = () => {
         <div class="kv-item"><div class="kv-label">Data de nascimento</div>${esc(cad?.dataNascimento || '—')}</div>
         <div class="kv-item"><div class="kv-label">Local de nascimento</div>${esc(cad?.localNascimento || '—')}</div></div></div>
       <div class="panel"><h3>Resumo dos vídeos</h3><div class="kv" style="margin-top:12px">
-        <div class="kv-item"><div class="kv-label">Total registrado</div>${hist.length + watch.length} item(ns)</div>
+        <div class="kv-item"><div class="kv-label">Total registrado</div>${entry.total ?? hist.length + watch.length} vídeo(s) (sem contar duas vezes o mesmo link)</div>
         <div class="kv-item"><div class="kv-label">Nota média dos vídeos</div>${mediaGeral !== null ? mediaGeral.toFixed(2) : '—'}</div>
         <div class="kv-item"><div class="kv-label">Nota ponderada (ranking)</div>${entry.media !== null ? entry.media.toFixed(2) : '—'}</div>
         <div class="kv-item"><div class="kv-label">Melhor vídeo</div>${best ? `${esc(best.nome)} — Nota ${best.nota.toFixed(2)}` : '—'}</div></div></div>
@@ -2999,7 +3232,7 @@ function renderVideoModal(param, body) {
   const scope = isH ? 'hist' : 'watch', excluded = ui.f[scope].exc.some(x => x.t === 'video' && x.v === item.id);
   body.innerHTML = `
     <div class="item-meta" style="margin-top:0">
-      ${isH ? `<span class="badge ${cls}">Nota Final: ${item.nota.toFixed(2)}</span>` : `<span class="badge ${cls}">Prioridade: ${esc(item.prioridade)}</span>`}
+      ${isH ? `<span class="badge ${cls}">Nota Final: ${item.nota.toFixed(2)} · ${noteBand(item.nota).label}</span>` : `<span class="badge ${cls}">Prioridade: ${esc(item.prioridade)}</span>`}
       ${isH && item.favorito ? '<span class="chip chip--fav">★ Favorito</span>' : ''}
       <span class="chip">${isH ? 'Histórico' : 'Watchlist'}</span>
     </div>
@@ -3008,7 +3241,7 @@ function renderVideoModal(param, body) {
         <div class="kv-item"><div class="kv-label">${isH ? 'Data da avaliação' : 'Na fila'}</div>${dateBlock}</div>
         <div class="kv-item"><div class="kv-label">Studio</div>${item.studio ? `<button type="button" class="chip chip--accent" style="cursor:pointer;font:inherit;font-size:var(--fs-xs);font-weight:700" data-action="openStudio" data-studio="${esc(item.studio)}" title="Ver vídeos deste studio">${esc(item.studio)}</button>` : '—'}</div>
         <div class="kv-item"><div class="kv-label">Atrizes</div>${atrizes.length ? `<div class="chips">${atrizes.map(n => `<button type="button" class="chip chip--accent" style="cursor:pointer;font:inherit;font-size:var(--fs-xs);font-weight:700" data-action="openAtriz" data-name="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : '—'}</div>
-        <div class="kv-item"><div class="kv-label">Tags</div>${splitList(item.tags).length ? `<div class="chips">${splitList(item.tags).map(t => `<button type="button" class="chip" style="cursor:pointer;font:inherit;font-size:var(--fs-xs);font-weight:700" data-action="openTag" data-tag="${esc(t)}" title="Ver vídeos com esta tag">${esc(t)}</button>`).join('')}</div>` : '—'}</div>
+        <div class="kv-item"><div class="kv-label">Tags</div>${splitList(item.tags).length ? `<div class="chips">${splitList(item.tags).map(t => `<button type="button" class="chip" style="cursor:pointer;font:inherit;font-size:var(--fs-xs);font-weight:700" data-action="openTag" data-tag="${esc(t)}" title="Ver vídeos com esta tag">${esc(t)}</button>`).join('')}</div>` : '<span class="muted">Sem tags</span>'}</div>
         ${item.link ? `<div class="kv-item"><div class="kv-label">Link</div><div class="link-text">${esc(item.link)}</div></div>` : ''}
       </div>
       ${isH ? `<div><div class="kv-label" style="margin-bottom:10px">Avaliação completa</div>${scores}</div>` : `<div>${emptyHtml('Ainda não avaliado', 'Use “Avaliar” para atribuir as notas e movê-lo para o histórico.')}</div>`}
@@ -3054,8 +3287,8 @@ function renderAtrizModal(name, body) {
     <div class="grid cols-4">
       <div class="hero-stat"><div class="small muted">Histórico</div><div class="v">${hist.length}</div></div>
       <div class="hero-stat"><div class="small muted">Watchlist</div><div class="v">${watch.length}</div></div>
+      <div class="hero-stat"><div class="small muted">Total</div><div class="v">${entry.total ?? hist.length + watch.length}</div></div>
       <div class="hero-stat"><div class="small muted">Nota atriz</div><div class="v">${entry.rawAvg !== null ? entry.rawAvg.toFixed(2) : '—'}</div></div>
-      <div class="hero-stat"><div class="small muted">Nota ponderada</div><div class="v">${entry.media !== null ? entry.media.toFixed(2) : '—'}</div></div>
     </div>
     ${tags.length ? `<div><div class="kv-label" style="margin-bottom:8px">Tags mais frequentes</div><div class="chips">${tags.map(t => `<button type="button" class="chip" style="cursor:pointer;font:inherit;font-size:var(--fs-xs);font-weight:700" data-action="openTag" data-tag="${esc(t.name)}">${esc(t.name)} (${t.count})</button>`).join('')}</div></div>` : ''}
     ${studios.length ? `<div><div class="kv-label" style="margin-bottom:8px">Studios</div><div class="chips">${studios.map(s => `<span class="chip">${esc(s.name)} (${s.count})</span>`).join('')}</div></div>` : ''}
@@ -3064,10 +3297,218 @@ function renderAtrizModal(name, body) {
     ${watch.length ? `<div><div class="kv-label" style="margin-bottom:8px">Na watchlist</div><div class="mini-list">${sortWatchlist(watch, 'prioridade').slice(0, 4).map(w => row(w, 'w')).join('')}</div></div>` : ''}
     <div class="actions">
       <button type="button" class="btn" data-action="openAtrizPage" data-name="${en}">Perfil completo</button>
-      ${hist.length ? `<button type="button" class="btn btn-secondary" data-action="filterByAtriz" data-name="${en}">Ver no histórico</button>` : ''}
+      ${hist.length ? `<button type="button" class="btn btn-secondary" data-action="filterByAtriz" data-name="${en}">Ver no histórico (${hist.length})</button>` : ''}
+      ${watch.length ? `<button type="button" class="btn btn-secondary" data-action="filterByAtrizWatch" data-name="${en}">Ver na watchlist (${watch.length})</button>` : ''}
       <button type="button" class="btn btn-secondary" data-action="toggleAtrizFav" data-name="${en}" aria-pressed="${fav}">${fav ? '★ Remover favorita' : '☆ Favoritar'}</button>
     </div>`;
   return true;
+}
+
+/* ---------- Pesquisa universal (Ctrl/⌘+K) ----------
+   Pesquisa direto nos dados salvos (nunca no DOM), com índice normalizado em cache por revisão dos dados.
+   Normalização: sem acento, sem maiúsculas, símbolos viram espaço; todas as palavras digitadas precisam aparecer (em qualquer ordem). */
+const normQ = s => fold(s).replace(/[^a-z0-9]+/g, ' ').trim();
+const SEARCH_LIMITS = { videos: 8, atrizes: 6, studios: 6 };
+ui.search = { items: [], active: -1, q: '' };
+
+let _searchIdx = null;
+function getSearchIndex() {
+  if (_searchIdx && _searchIdx.rev === state.rev) return _searchIdx;
+  const idx = getIndex();
+  _searchIdx = {
+    rev: state.rev,
+    videos: [
+      ...state.videos.map(v => ({ src: 'h', id: v.id, label: v.nome, n: normQ(v.nome), item: v })),
+      ...state.watchlist.map(w => ({ src: 'w', id: w.id, label: w.nome, n: normQ(w.nome), item: w }))
+    ],
+    atrizes: idx.atrizList.map(e => ({ label: e.nome, n: normQ(e.nome), e })),
+    studios: idx.studios.map(s => ({ label: s.name, n: normQ(s.name), s }))
+  };
+  return _searchIdx;
+}
+function searchMatch(list, q) {
+  const toks = q.split(' ').filter(Boolean);
+  if (!toks.length) return [];
+  const out = [];
+  for (const r of list) {
+    if (!toks.every(t => r.n.includes(t))) continue;
+    out.push({ r, rank: r.n.startsWith(toks[0]) ? 0 : r.n.includes(' ' + toks[0]) ? 1 : 2 });
+  }
+  return out.sort((a, b) => a.rank - b.rank || cmp(a.r.label, b.r.label)).map(x => x.r);
+}
+
+function searchRow(kind, i, html, data) {
+  return `<button type="button" class="res-row" role="option" id="sr-${i}" aria-selected="false" data-action="searchPick" data-kind="${kind}" ${data}>${html}</button>`;
+}
+function runSearch() {
+  const input = byId('searchInput'), box = byId('searchResults');
+  const raw = input.value, q = normQ(raw), ss = ui.search;
+  ss.q = q; ss.items = []; ss.active = -1;
+  if (!q) {
+    box.innerHTML = `<div class="empty"><div><strong>Pesquise por vídeos, atrizes e estúdios</strong></div><div>Digite parte do nome — não importa maiúsculas, acentos ou a ordem das palavras.</div></div>`;
+    input.setAttribute('aria-expanded', 'false'); return;
+  }
+  const si = getSearchIndex();
+  const vids = searchMatch(si.videos, q), ats = searchMatch(si.atrizes, q), sts = searchMatch(si.studios, q);
+  if (!vids.length && !ats.length && !sts.length) {
+    box.innerHTML = `<div class="empty"><div><strong>Nenhum resultado encontrado</strong></div><div>Nada corresponde a “${esc(raw.trim())}”. Tente outro trecho do nome.</div></div>`;
+    input.setAttribute('aria-expanded', 'false'); return;
+  }
+  let i = 0, html = '';
+  const vShown = vids.slice(0, SEARCH_LIMITS.videos);
+  if (vids.length) {
+    const hAll = vids.filter(v => v.src === 'h').length, wAll = vids.length - hAll;
+    html += `<div class="res-group" role="group" aria-label="Vídeos"><h4>Vídeos (${vids.length})</h4>${vShown.map(v => {
+      const it = v.item, isH = v.src === 'h';
+      const badge = isH ? `<span class="badge ${noteClass(it.nota)}">${it.nota.toFixed(2)}</span>` : `<span class="badge ${prioInfo(it.prioridade).cls}">${esc(it.prioridade)}</span>`;
+      ss.items.push(1);
+      return searchRow('video', i++, `<span class="t">${esc(v.label)}<span class="s">${isH ? 'Histórico' : 'Watchlist'} • ${esc(it.studio || 'Sem studio')}</span></span>${badge}`, `data-source="${v.src}" data-id="${esc(v.id)}"`);
+    }).join('')}
+      ${vids.length > vShown.length ? `<div class="row res-more">${hAll ? `<button type="button" class="btn btn-secondary btn-sm" data-action="searchAll" data-scope="hist">Ver todos no Histórico (${hAll})</button>` : ''}${wAll ? `<button type="button" class="btn btn-secondary btn-sm" data-action="searchAll" data-scope="watch">Ver todos na Watchlist (${wAll})</button>` : ''}</div>` : ''}</div>`;
+  }
+  if (ats.length) {
+    html += `<div class="res-group" role="group" aria-label="Atrizes"><h4>Atrizes (${ats.length})</h4>${ats.slice(0, SEARCH_LIMITS.atrizes).map(a => {
+      ss.items.push(1);
+      return searchRow('atriz', i++, `${avatarHtml(a.e.nome, a.e.cadastro?.img)}<span class="t">${esc(a.label)}<span class="s">Histórico ${a.e.hist.length} • Watchlist ${a.e.watch.length} • Total ${a.e.total}</span></span>${a.e.cadastro?.favorita ? '<span class="chip chip--fav">★</span>' : ''}`, `data-name="${esc(a.label)}"`);
+    }).join('')}${ats.length > SEARCH_LIMITS.atrizes ? `<div class="small muted res-more">+${ats.length - SEARCH_LIMITS.atrizes} atrizes — refine a pesquisa.</div>` : ''}</div>`;
+  }
+  if (sts.length) {
+    html += `<div class="res-group" role="group" aria-label="Estúdios"><h4>Estúdios (${sts.length})</h4>${sts.slice(0, SEARCH_LIMITS.studios).map(s => {
+      const h = state.videos.filter(v => fold(v.studio) === fold(s.label)).length, w = s.s.count - h;
+      ss.items.push(1);
+      return searchRow('studio', i++, `<span class="t">${esc(s.label)}<span class="s">Histórico ${h} • Watchlist ${w}</span></span>`, `data-studio="${esc(s.label)}" data-hist="${h}"`);
+    }).join('')}${sts.length > SEARCH_LIMITS.studios ? `<div class="small muted res-more">+${sts.length - SEARCH_LIMITS.studios} estúdios — refine a pesquisa.</div>` : ''}</div>`;
+  }
+  box.innerHTML = html;
+  input.setAttribute('aria-expanded', 'true');
+}
+const runSearchDebounced = debounce(runSearch, 120);
+
+function openSearch() {
+  const dlg = byId('searchDialog'), input = byId('searchInput');
+  if (!dlg.open) dlg.showModal();
+  input.focus(); input.select();
+  runSearch();
+}
+function closeSearch() { const dlg = byId('searchDialog'); if (dlg.open) dlg.close(); }
+function searchSetActive(n) {
+  const rows = $$('#searchResults .res-row'), ss = ui.search;
+  if (!rows.length) return;
+  ss.active = (n + rows.length) % rows.length;
+  rows.forEach((r, i) => r.setAttribute('aria-selected', String(i === ss.active)));
+  byId('searchInput').setAttribute('aria-activedescendant', rows[ss.active].id);
+  rows[ss.active].scrollIntoView({ block: 'nearest' });
+}
+function searchKey(e) {
+  if (e.key === 'ArrowDown') { e.preventDefault(); searchSetActive(ui.search.active + 1); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); searchSetActive(ui.search.active < 0 ? -1 : ui.search.active - 1); }
+  else if (e.key === 'Enter') {
+    e.preventDefault();
+    clearTimeout(0);
+    if (normQ(byId('searchInput').value) !== ui.search.q) runSearch();            // aplica a digitação pendente antes de abrir
+    const rows = $$('#searchResults .res-row');
+    (rows[ui.search.active >= 0 ? ui.search.active : 0])?.click();
+  }
+}
+// Abre o resultado: vídeo/atriz em modal (mantém a tela e os filtros de origem); estúdio mostra os vídeos dele
+function searchPick(el) {
+  const d = el.dataset;
+  closeSearch();
+  if (d.kind === 'video') openModal('video', `${d.source}:${d.id}`);
+  else if (d.kind === 'atriz') openModal('atriz', d.name);
+  else openWithFilter({ t: 'studio', v: d.studio, label: d.studio }, Number(d.hist) > 0 ? 'hist' : 'watch');
+}
+// "Ver todos": usa a busca por texto que já existe na lista
+function searchAll(scope) {
+  const raw = byId('searchInput').value.trim();
+  closeSearch();
+  ui.f[scope] = { ...defaultFilters()[scope], busca: raw };
+  syncFilterInputs(scope); resetVisible(scope);
+  const input = byId(scope === 'hist' ? 'histBusca' : 'watchBusca'); if (input) input.value = raw;
+  invalidate(VIEW_OF[scope]);
+  go(scope === 'hist' ? 'historico' : 'watchlist');
+}
+
+/* ---------- Pesos da avaliação (editáveis; notas recalculadas ao aplicar) ----------
+   Regras: pesos inteiros em pontos percentuais, soma sempre ≤ 100. Se a soma for menor que 100 a nota continua
+   na escala 0–10 (média ponderada normalizada). Os critérios de cada vídeo nunca são alterados — só a nota final. */
+ui.wdraft = null;
+
+const weightsEqual = (a, b) => SCORE_IDS.every(k => a[k] === b[k]);
+function top10Ids(w) {
+  return state.videos.filter(hasScores).map(v => ({ id: v.id, nome: v.nome, nota: calcNotaCom(v, w) }))
+    .sort((a, b) => b.nota - a.nota || cmp(a.nome, b.nome)).slice(0, 10).map(x => x.id);
+}
+function renderWeights() {
+  const grid = byId('weightsGrid');
+  if (!grid) return;
+  if (!ui.wdraft) ui.wdraft = { ...PESOS };
+  grid.innerHTML = SCORE_FIELDS.map(f => `
+    <div class="field">
+      <label for="wt-${f.id}">${esc(f.label)}</label>
+      <div class="row" style="flex-wrap:nowrap;gap:8px">
+        <input id="wt-${f.id}" class="input" type="number" min="0" max="100" step="1" inputmode="numeric" data-weight="${f.id}" value="${ui.wdraft[f.id]}" style="max-width:110px" />
+        <span class="small muted">% <span style="opacity:.8">(padrão ${PESOS_PADRAO[f.id]}%)</span></span>
+      </div>
+    </div>`).join('');
+  updateWeightsInfo();
+}
+function updateWeightsInfo() {
+  const d = ui.wdraft, sum = weightsSum(d), unchanged = weightsEqual(d, PESOS);
+  const bar = byId('weightsBar'), msg = byId('weightsMsg');
+  setText('weightsSum', `${sum}%`);
+  bar.style.width = `${clamp(sum, 0, 100)}%`;
+  bar.parentElement.setAttribute('aria-label', `Soma dos pesos: ${sum}% de 100%`);
+  if (sum === 0) msg.textContent = 'Defina pelo menos um peso maior que zero.';
+  else if (sum < 100) msg.textContent = `Faltam ${100 - sum} pontos para 100%. Com soma menor que 100, os pesos valem em proporção e a nota continua indo de 0 a 10.`;
+  else msg.textContent = 'Soma exata de 100%. A soma nunca pode passar disso.';
+  // prévia do impacto (sem gravar nada)
+  const imp = byId('weightsImpact'), rated = state.videos.filter(hasScores);
+  if (unchanged || sum === 0) { imp.textContent = unchanged ? 'Sem alterações em relação aos pesos atuais.' : ''; }
+  else if (!rated.length) imp.textContent = 'Ainda não há vídeos avaliados para recalcular.';
+  else {
+    const changed = rated.filter(v => calcNotaCom(v, d) !== v.nota).length;
+    const avgNow = rated.reduce((s, v) => s + v.nota, 0) / rated.length, avgNew = rated.reduce((s, v) => s + calcNotaCom(v, d), 0) / rated.length;
+    const a = top10Ids(PESOS), b = top10Ids(d), inter = b.filter(id => a.includes(id)).length;
+    imp.textContent = `Prévia: ${plural(changed, 'vídeo muda de nota', 'vídeos mudam de nota')} • média geral ${round2(avgNow).toFixed(2)} → ${round2(avgNew).toFixed(2)} • Top 10: ${a.length - inter === 0 ? 'mesmos vídeos' : plural(a.length - inter, 'vídeo entra/sai', 'vídeos entram/saem')}.`;
+  }
+  byId('applyWeightsBtn').disabled = unchanged || sum === 0;
+  byId('restoreWeightsBtn').disabled = weightsEqual(PESOS, PESOS_PADRAO) && weightsEqual(d, PESOS_PADRAO);
+}
+// Campo editado: limita para a soma nunca passar de 100
+function onWeightInput(el) {
+  const id = el.dataset.weight, d = ui.wdraft;
+  if (el.value === '') { d[id] = 0; updateWeightsInfo(); return; }
+  let n = clamp(Math.round(Number(el.value)) || 0, 0, 100);
+  const others = weightsSum(d) - d[id], max = 100 - others;
+  if (n > max) { n = max; toast(`A soma dos pesos não pode passar de 100%. Máximo para ${SCORE_FIELDS.find(f => f.id === id).label}: ${max}%.`, { type: 'warn', timeout: 2600 }); }
+  if (String(n) !== el.value) el.value = String(n);
+  d[id] = n;
+  updateWeightsInfo();
+}
+async function setWeights(next, label) {
+  const prev = { ...PESOS };
+  Object.assign(PESOS, next);
+  const n = recalcAllNotas();
+  persistOrWarn('weights', 'videos');
+  ui.wdraft = { ...PESOS };
+  dataChanged(); refreshWeightLabels(); updateNotaPreview(); renderWeights();
+  toast(`${label} ${plural(n, 'nota recalculada', 'notas recalculadas')}.`, { type: 'ok', timeout: 9000, action: { label: 'Desfazer', run: () => {
+    Object.assign(PESOS, prev); recalcAllNotas(); persistOrWarn('weights', 'videos'); ui.wdraft = { ...PESOS };
+    dataChanged(); refreshWeightLabels(); updateNotaPreview(); renderWeights();
+  } } });
+}
+async function applyWeights() {
+  const d = { ...ui.wdraft };
+  if (weightsSum(d) <= 0 || weightsSum(d) > 100 || weightsEqual(d, PESOS)) return;
+  const rated = state.videos.filter(hasScores), n = rated.filter(v => calcNotaCom(v, d) !== v.nota).length;
+  if (!(await confirmAction({ title: 'Aplicar novos pesos?', message: `${plural(n, 'vídeo terá a nota recalculada', 'vídeos terão a nota recalculada')}. As notas de cada critério não mudam, e você pode restaurar o padrão ou desfazer logo depois.`, confirmLabel: 'Aplicar e recalcular' }))) return;
+  await setWeights(d, 'Pesos aplicados:');
+}
+async function restoreWeights() {
+  const rated = state.videos.filter(hasScores), n = rated.filter(v => calcNotaCom(v, PESOS_PADRAO) !== v.nota).length;
+  if (!(await confirmAction({ title: 'Restaurar pesos padrão?', message: `Os pesos voltam ao padrão (${SCORE_FIELDS.map(f => `${f.label} ${PESOS_PADRAO[f.id]}%`).join(', ')}) e ${plural(n, 'nota será recalculada', 'notas serão recalculadas')}.`, confirmLabel: 'Restaurar padrão', danger: true }))) return;
+  await setWeights({ ...PESOS_PADRAO }, 'Padrão restaurado:');
 }
 
 /* ---------- 9. AÇÕES (um único ponto de entrada por delegação de eventos) ---------- */
@@ -3161,7 +3602,9 @@ async function requestClearVideo() {
 
 /* --- Watchlist --- */
 function saveWatch() {
+  const tagsOk = chipCommit('w-tags');
   chipCommit('w-atrizes');
+  if (!tagsOk) { byId('w-tags-input').focus(); return; }
   if (!str(byId('watchNome').value) && str(byId('watchLink').value)) autofillFromLink('watch');
   const nome = str(byId('watchNome').value);
   fieldError('watchNome', ''); fieldError('watchLink', '');
@@ -3170,9 +3613,11 @@ function saveWatch() {
   if (lk.invalid) { fieldError('watchLink', 'Este link parece inválido. Use um endereço http(s) completo.'); byId('watchLink').focus(); return; }
   const dup = findDuplicateByLink(state.watchlist, lk.url, ui.editingWatchId);
   if (dup) { fieldError('watchLink', `Este link já existe na watchlist (“${dup.nome}”).`); byId('watchLink').focus(); return; }
+  const inHist = findDuplicateByLink(state.videos, lk.url);
+  if (inHist) { fieldError('watchLink', `Este vídeo já foi avaliado no histórico (“${inHist.nome}”).`); byId('watchLink').focus(); return; }
   const data = {
     nome: smartCase(nome), studio: canonicalStudio(byId('watchStudio').value),
-    atrizes: listToString(ui.chips['w-atrizes'].values), prioridade: PRIO_MAP.has(byId('watchPrioridade').value) ? byId('watchPrioridade').value : 'Média', link: lk.url
+    atrizes: listToString(ui.chips['w-atrizes'].values), tags: listToString(ui.chips['w-tags'].values), prioridade: PRIO_MAP.has(byId('watchPrioridade').value) ? byId('watchPrioridade').value : 'Média', link: lk.url
   };
   const existing = ui.editingWatchId ? findWatch(ui.editingWatchId) : null;
   if (existing) Object.assign(existing, data);
@@ -3191,6 +3636,7 @@ async function editWatch(id) {
   byId('watchNome').value = w.nome; byId('watchStudio').value = w.studio; byId('watchLink').value = w.link;
   byId('watchPrioridade').value = w.prioridade;
   chipSet('w-atrizes', splitList(w.atrizes));
+  chipSet('w-tags', splitList(w.tags).map(normalizeTagName).filter(Boolean));
   byId('addWatchBtn').textContent = 'Atualizar Item';
   setText('watchFormStatus', `Editando: ${w.nome}`);
   expandSection('watchlistBody');
@@ -3292,11 +3738,11 @@ function excludeDrawn(scope) {
   excludeItem(scope, id);
   (scope === 'hist' ? drawHist : drawWatch)();
 }
-function openWithFilter(facet) {                                // "ver os vídeos desta tag/studio/atriz" a partir de outra tela
-  ui.f.hist = { ...defaultFilters().hist, inc: [facet] };
-  syncFilterInputs('hist'); resetVisible('hist');
-  invalidate('historico');
-  go('historico');
+function openWithFilter(facet, scope = 'hist') {                  // "ver os itens desta tag/studio/atriz" no Histórico ou na Watchlist
+  ui.f[scope] = { ...defaultFilters()[scope], inc: [facet] };
+  syncFilterInputs(scope); resetVisible(scope);
+  invalidate(VIEW_OF[scope]);
+  go(scope === 'hist' ? 'historico' : 'watchlist');
 }
 
 /* Seletor de filtros (combobox com sugestões): incluir ou excluir */
@@ -3306,7 +3752,7 @@ function mountPickers() {
     const s = el.dataset.picker;
     el.classList.add('picker');
     el.innerHTML = `<label for="${s}-picker-input">Adicionar filtro</label>
-      <input id="${s}-picker-input" class="input" role="combobox" aria-expanded="false" aria-controls="${s}-picker-list" aria-autocomplete="list" autocomplete="off" placeholder="${s === 'hist' ? 'Tag, studio, grupo, atriz ou vídeo…' : 'Studio, grupo, atriz ou vídeo…'}" />
+      <input id="${s}-picker-input" class="input" role="combobox" aria-expanded="false" aria-controls="${s}-picker-list" aria-autocomplete="list" autocomplete="off" placeholder="Tag, studio, grupo, atriz ou vídeo…" />
       <ul class="picker-list" id="${s}-picker-list" role="listbox" aria-label="Sugestões de filtros" hidden></ul>
       <div class="field-hint">Enter inclui • Shift+Enter exclui • ↑ ↓ navega • Esc fecha. Excluir tira da lista e do sorteio, sem apagar nada.</div>`;
   });
@@ -3455,14 +3901,14 @@ async function removeLibraryTag(tag) {
   const msg = n ? `A tag “${tag}” é usada em ${plural(n, 'vídeo', 'vídeos')}. Ela deixará de aparecer na biblioteca, mas continuará nesses vídeos.` : `A tag “${tag}” será removida da biblioteca.`;
   if (!(await confirmAction({ title: 'Remover tag?', message: msg, confirmLabel: 'Remover', danger: true }))) return;
   state.tagCatalog = state.tagCatalog.filter(t => fold(t) !== fold(tag));
-  chipSet('v-tags', ui.chips['v-tags'].values.filter(t => fold(t) !== fold(tag)));
+  ['v-tags', 'w-tags'].forEach(f => chipSet(f, ui.chips[f].values.filter(t => fold(t) !== fold(tag))));
   persistOrWarn('tags');
   dataChanged();
 }
 async function resetLibraryTags() {
   if (!(await confirmAction({ title: 'Restaurar tags padrão?', message: 'Suas tags personalizadas serão removidas da biblioteca (os vídeos mantêm as tags que já têm).', confirmLabel: 'Restaurar', danger: true }))) return;
   state.tagCatalog = [...DEFAULT_TAGS];
-  chipSet('v-tags', ui.chips['v-tags'].values.filter(t => normalizeTagName(t)));
+  ['v-tags', 'w-tags'].forEach(f => chipSet(f, ui.chips[f].values.filter(t => normalizeTagName(t))));
   persistOrWarn('tags');
   dataChanged();
 }
@@ -3475,13 +3921,13 @@ async function renameTag(tag) {
   if (target === tag) return;
   const other = state.tagCatalog.find(t => fold(t) === fold(target) && fold(t) !== fold(tag));
   const finalName = other || target;
-  const affected = state.videos.filter(v => splitList(v.tags).some(t => fold(t) === fold(tag)));
+  const affected = [...state.videos, ...state.watchlist].filter(v => splitList(v.tags).some(t => fold(t) === fold(tag)));   // Histórico e Watchlist usam as mesmas tags
   if (other && !(await confirmAction({ title: 'Mesclar tags?', message: `Já existe a tag “${other}”. “${tag}” será mesclada nela (${plural(affected.length, 'vídeo será atualizado', 'vídeos serão atualizados')}).`, confirmLabel: 'Mesclar', danger: true }))) return;
   state.tagCatalog = normalizeTagCatalog([...state.tagCatalog.filter(t => fold(t) !== fold(tag)), finalName]);
   affected.forEach(v => { v.tags = listToString(splitList(v.tags).map(t => (fold(t) === fold(tag) ? finalName : t))); });
-  [ui.f.hist.inc, ui.f.hist.exc].forEach(arr => arr.forEach(x => { if (x.t === 'tag' && fold(x.v) === fold(tag)) { x.v = finalName; x.label = finalName; } }));
-  chipSet('v-tags', ui.chips['v-tags'].values.map(t => (fold(t) === fold(tag) ? finalName : t)));
-  persistOrWarn('tags', 'videos');
+  [ui.f.hist.inc, ui.f.hist.exc, ui.f.watch.inc, ui.f.watch.exc].forEach(arr => arr.forEach(x => { if (x.t === 'tag' && fold(x.v) === fold(tag)) { x.v = finalName; x.label = finalName; } }));
+  ['v-tags', 'w-tags'].forEach(f => chipSet(f, ui.chips[f].values.map(t => (fold(t) === fold(tag) ? finalName : t))));
+  persistOrWarn('tags', 'videos', 'watchlist');
   dataChanged();
   toast(other ? `“${tag}” mesclada em “${finalName}”.` : `Tag renomeada para “${finalName}” (${plural(affected.length, 'vídeo atualizado', 'vídeos atualizados')}).`, { type: 'ok' });
 }
@@ -3605,7 +4051,7 @@ async function buildBackup() {
     app: APP_NAME, backupVersion: BACKUP_VERSION, exportedAt: nowIso(), format: 'json-single-file',
     data: {
       videos: state.videos, watchlist: state.watchlist, atrizLibrary, tagCatalog: state.tagCatalog,
-      studioGroups: state.studioGroups, collapsedStudioGroups: state.collapsedGroups, visualSettings: state.settings
+      studioGroups: state.studioGroups, collapsedStudioGroups: state.collapsedGroups, visualSettings: state.settings, weights: { ...PESOS }
     },
     integrity: {
       videosCount: state.videos.length, watchlistCount: state.watchlist.length, atrizCount: state.atrizes.length,
@@ -3622,7 +4068,7 @@ async function exportBackup(btn) {
       a.href = url; a.download = `backup_projeto_x_v${BACKUP_VERSION}_${nowIso().slice(0, 19).replace(/[:T]/g, '-')}.json`;
       document.body.append(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 2000);
-      state.prefs.lastBackupAt = nowIso(); persist('prefs'); updateBackupInfo();
+      state.prefs.lastBackupAt = nowIso(); state.prefs.backupSnoozeUntil = ''; persist('prefs'); updateBackupInfo();
       toast('Backup exportado. Guarde o arquivo em um local seguro.', { type: 'ok' });
     } catch (e) {
       console.error(e); toast('Não foi possível exportar o backup. Verifique o espaço disponível e tente novamente.', { type: 'error' });
@@ -3631,7 +4077,7 @@ async function exportBackup(btn) {
 }
 function sanitizeBackup(parsed) {
   const root = parsed && typeof parsed === 'object' && !Array.isArray(parsed) && parsed.data && typeof parsed.data === 'object' ? parsed.data : parsed;
-  if (Array.isArray(root)) return { videos: uniqueIds(root.map(normalizeVideo).filter(Boolean)), watchlist: [], atrizes: [], tagCatalog: null, studioGroups: [], collapsedGroups: [], settings: null };
+  if (Array.isArray(root)) return { videos: uniqueIds(root.map(normalizeVideo).filter(Boolean)), watchlist: [], atrizes: [], tagCatalog: null, studioGroups: [], collapsedGroups: [], settings: null, weights: null };
   if (!root || typeof root !== 'object' || !Array.isArray(root.videos)) throw new Error('Este arquivo não parece ser um backup do Projeto X (sem lista de vídeos).');
   const tags = normalizeTagCatalog(root.tagCatalog);
   return {
@@ -3641,10 +4087,11 @@ function sanitizeBackup(parsed) {
     tagCatalog: tags.length ? tags : null,
     studioGroups: normalizeGroups(root.studioGroups),
     collapsedGroups: uniqueCI(asArray(root.collapsedStudioGroups).map(str)),
-    settings: root.visualSettings ? normalizeSettings(root.visualSettings) : null
+    settings: root.visualSettings ? normalizeSettings(root.visualSettings) : null,
+    weights: root.weights ? normalizeWeights(root.weights) : null
   };
 }
-const takeSnapshot = () => JSON.parse(JSON.stringify({ videos: state.videos, watchlist: state.watchlist, atrizes: state.atrizes, tagCatalog: state.tagCatalog, studioGroups: state.studioGroups, collapsedGroups: state.collapsedGroups, settings: state.settings }));
+const takeSnapshot = () => JSON.parse(JSON.stringify({ videos: state.videos, watchlist: state.watchlist, atrizes: state.atrizes, tagCatalog: state.tagCatalog, studioGroups: state.studioGroups, collapsedGroups: state.collapsedGroups, settings: state.settings, weights: { ...PESOS } }));
 async function applyDataset(ds) {
   const oldIds = state.atrizes.map(a => a.imageId).filter(Boolean);
   state.videos = uniqueIds(ds.videos); state.watchlist = uniqueIds(ds.watchlist);
@@ -3652,10 +4099,13 @@ async function applyDataset(ds) {
   state.tagCatalog = ds.tagCatalog && ds.tagCatalog.length ? ds.tagCatalog : [...DEFAULT_TAGS];
   state.studioGroups = ds.studioGroups; state.collapsedGroups = ds.collapsedGroups;
   if (ds.settings) state.settings = ds.settings;
+  if (ds.weights) Object.assign(PESOS, ds.weights);
+  recalcAllNotas();                                        // notas sempre coerentes com os pesos vigentes
+  ui.wdraft = null;
   for (const a of state.atrizes) { if (a.img) { a.imageId = a.imageId || newImageId(a.nome); await setAtrizImage(a, a.img); } }
   const keep = new Set(state.atrizes.map(a => a.imageId));
   for (const id of oldIds) { if (!keep.has(id)) { try { await idb.del(id); } catch (e) { /* ignore */ } } }
-  persist('videos', 'watchlist', 'atrizes', 'tags', 'groups', 'collapsed', 'settings');
+  persist('videos', 'watchlist', 'atrizes', 'tags', 'groups', 'collapsed', 'settings', 'weights');
   resetVideoForm(); resetWatchForm();
   applyTheme(); dataChanged();
 }
@@ -3685,6 +4135,7 @@ async function mergeDataset(inc) {
     if (cur) cur.studios = uniqueCI([...cur.studios, ...g.studios]).sort(cmp); else groups.push(g);
   });
   state.studioGroups = normalizeGroups(groups);
+  recalcAllNotas();
   persist('videos', 'watchlist', 'atrizes', 'tags', 'groups');
   dataChanged();
   return { addV, addW, addA };
@@ -3754,6 +4205,12 @@ const Actions = {
   excludeDrawn: el => excludeDrawn(el.dataset.scope),
   excludeItem: el => excludeItem(el.dataset.scope, el.dataset.id),
   openTag: el => { closeModal(); openWithFilter({ t: 'tag', v: el.dataset.tag, label: el.dataset.tag }); },
+  openTagWatch: el => { closeModal(); openWithFilter({ t: 'tag', v: el.dataset.tag, label: el.dataset.tag }, 'watch'); },
+  filterByAtrizWatch: el => { closeModal(); openWithFilter({ t: 'atriz', v: el.dataset.name, label: el.dataset.name }, 'watch'); },
+  openSearch: () => openSearch(),
+  closeSearch: () => closeSearch(),
+  searchPick: el => searchPick(el),
+  searchAll: el => searchAll(el.dataset.scope),
   openStudio: el => { closeModal(); openWithFilter({ t: 'studio', v: el.dataset.studio, label: el.dataset.studio }); },
   filterByAtriz: el => { closeModal(); openWithFilter({ t: 'atriz', v: el.dataset.name, label: el.dataset.name }); },
   openAtrizPage: el => go('atriz', el.dataset.name),
@@ -3792,6 +4249,9 @@ const Actions = {
   removeStudioGroup: el => removeStudioGroup(el.dataset.id),
   resetStudioGroups: () => resetStudioGroups(),
   resetSettings: () => { state.settings = { ...DEFAULT_SETTINGS }; persistOrWarn('settings'); applyTheme(); invalidate('historico', 'watchlist'); toast('Configurações restauradas.', { type: 'ok', timeout: 2000 }); },
+  snoozeBackup: () => { state.prefs.backupSnoozeUntil = new Date(Date.now() + 86400000).toISOString(); persist('prefs'); updateBackupReminder(); toast('Ok, lembrarei amanhã.', { timeout: 2200 }); },
+  applyWeights: () => applyWeights(),
+  restoreWeights: () => restoreWeights(),
   exportBackup: el => exportBackup(el)
 };
 
@@ -3820,6 +4280,8 @@ function bindEvents() {
     if (t.id === 'watchNome') fieldError('watchNome', '');
     if (t.closest('[data-chips]')) chipError(t.closest('[data-chips]').dataset.chips, '');
     if (t.id === 'avaliadoEm') fieldError('avaliadoEm', '');
+    if (t.id === 'searchInput') runSearchDebounced();
+    if (t.dataset.weight) onWeightInput(t);
     if (t.closest('.picker') && t.matches('input')) renderPicker(t.closest('.picker').dataset.picker);
     if (t.id === 'groupSearch') { ui.groups.q = t.value; invalidate('biblioteca'); }
     if (t.id === 'tagSearch') { ui.tags.q = t.value; invalidate('biblioteca'); }
@@ -3867,7 +4329,10 @@ function bindEvents() {
     if (e.key === 'Enter' && t.closest?.('#videoForm') && t.tagName === 'INPUT') { e.preventDefault(); return; }
     if (e.key === 'Enter' && t.closest?.('#watchFormPanel') && t.tagName === 'INPUT') { e.preventDefault(); return; }
 
+    if (t.id === 'searchInput') { searchKey(e); return; }
     const mod = e.ctrlKey || e.metaKey;
+    // Ctrl/⌘+K: pesquisa universal (funciona de qualquer tela, inclusive digitando em um campo)
+    if (mod && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'k') { e.preventDefault(); openSearch(); return; }
     // Ctrl/⌘+S: salva somente no Cadastro e na Watchlist
     if (mod && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 's') {
       if (ui.section === 'cadastro') { e.preventDefault(); saveVideo(); }
@@ -3906,6 +4371,7 @@ function bindEvents() {
 
   window.addEventListener('popstate', () => { ui.restore = true; });          // voltar do navegador devolve a posição da lista
   byId('detailDialog').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+  byId('searchDialog').addEventListener('click', e => { if (e.target === e.currentTarget) closeSearch(); });
   byId('detailDialog').addEventListener('close', () => { ui.modalStack = []; });
   window.addEventListener('hashchange', () => route());
   window.addEventListener('resize', debounce(() => ui.cropper?.render(), 120));
@@ -3965,6 +4431,9 @@ function init() {
     toast('Alguns dados salvos estavam corrompidos e foram preservados em uma cópia de segurança no navegador. Considere importar um backup.', { type: 'warn', timeout: 12000 });
   }
   setupPwa();
+  // reavalia o lembrete de backup ao voltar para a aba e a cada hora (app aberto por muito tempo)
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) updateBackupReminder(); });
+  setInterval(updateBackupReminder, 3600000);
 }
 init();
 

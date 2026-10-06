@@ -121,3 +121,65 @@ Datas (novo, futuro, legado sem data, editar nota/favorito, período, ordenaçã
 | 10 | Comparar dois vídeos / atrizes | decidir entre opções | Média | Depois |
 | 11 | Sincronização entre dispositivos | usar em celular e PC | Alta (precisa de serviço externo) | Só se necessário |
 | 12 | Metas mensais ("avaliar 10 por mês") | motivação | Baixa | Opcional |
+
+---
+
+# v2.2 — Atrizes por quantidade, tags na Watchlist, pesquisa universal
+
+## Dados
+Nenhuma estrutura nova: o item da Watchlist já tinha `tags` (texto "A, B"); agora o formulário o preenche. Itens antigos continuam sem tags e aparecem como **"Sem tags"** (nada é inventado). Schema permanece 3; backup v6.
+
+## Contagem de vídeos por atriz (decisão)
+- Histórico = vídeos do Histórico que citam a atriz; Watchlist = itens da fila que a citam. Vídeo com várias atrizes conta **uma vez para cada atriz** (cada uma realmente está nele).
+- **Total = Histórico + Watchlist sem contar duas vezes o mesmo vídeo** (mesmo link presente nas duas listas).
+- Ordenação (no seletor "Ordenar por" que já existia): Histórico, Watchlist e Total, maior→menor e menor→maior (A–Z/Z–A já existiam). Cartão e modal mostram Histórico • Watchlist • Total.
+- **Filtro por faixa de quantidade (">10", "10–30"): não implementado.** A ordenação já coloca as maiores no topo; o filtro adicionaria mais um controle por pouco ganho. Fica como sugestão.
+
+## Tags na Watchlist
+Mesmo campo de chips, mesmo catálogo, mesma normalização (ignora caixa/acento) e o mesmo "Criar e adicionar". Renomear/mesclar/remover tags agora considera Histórico **e** Watchlist; a Biblioteca mostra "Hist. N · Fila N" e um atalho **Fila** para ver os itens da fila com a tag.
+
+## Filtros e sorteio da Watchlist
+O motor é o mesmo do Histórico: **filtros → tags (incluir, E/OU "Todas as tags / Qualquer uma") → exclusões (tag, studio, grupo, atriz, vídeo) → conjunto final → sorteio**. O botão mostra quantos entram ("Sortear Vídeo (3)").
+
+## Pesquisa universal
+Botão no cabeçalho, **Ctrl/⌘+K** e botão flutuante 🔍 no celular (o `/` continua sendo a busca da tela atual). Abre um painel (`<dialog>`) que não estoura a tela. Pesquisa direto nos dados (índice normalizado em cache por alteração), com debounce de 120 ms, sem acento/caixa/símbolos e por todas as palavras em qualquer ordem. Resultados por categoria (Vídeos, Atrizes, Estúdios; setas + Enter). Vídeo e atriz abrem os **modais existentes** por cima da tela atual (filtros, exclusões, ordenação e posição preservados ao fechar); estúdio abre o Histórico (ou a Watchlist, se só houver itens da fila) filtrado por ele; "Ver todos" usa a busca por texto da lista.
+
+## ANTES → DEPOIS
+- Adicionar à Watchlist um link que **já está no Histórico** passava sem aviso → agora é bloqueado com mensagem (igual ao "Avaliar" já fazia).
+- O filtro de tags/ordem de combinação da Watchlist não existia → reaproveita o motor do Histórico.
+- "Total" da atriz era a soma simples → agora não duplica o mesmo vídeo presente nas duas listas.
+
+## Testes (navegador real)
+Atrizes: 6 ordenações por quantidade + alfabética, atriz sem vídeos no Histórico, vídeo repetido nas duas listas (total 4 em vez de 5), modal e navegação "Ver na watchlist". Tags da fila: sem tag, uma, várias, tag nova, editar, remover, item antigo, normalização "ação"→"Ação". Sorteio: sem filtro, 1 tag, 2 tags (E e OU), exclusão de tag e de vídeo, sorteio só entre os restantes (30 tentativas), nenhum resultado, um resultado. Pesquisa: vídeo, atriz, estúdio, parcial, caixa/acento, símbolos, inexistente, vazia, várias categorias, teclado, modais e retorno ao contexto (filtro e ordenação mantidos). Biblioteca: contagens e renomear tag propagando para a fila. Sem rolagem horizontal em 1920, 390 e 320 px; painel de pesquisa cabe na tela.
+
+## Limitações
+- O painel de teste não gera quadros de tela; a validação foi por DOM, medidas e fluxos (sem captura visual dos novos componentes).
+- Registro do Service Worker continua não verificado.
+
+## Sugestões (NÃO implementadas)
+| # | Sugestão | Objetivo | Benefício | Complex. | Impacto | Dependências | Prioridade |
+|---|---|---|---|---|---|---|---|
+| 1 | Filtro por faixa de vídeos nas atrizes | ">10", "10–30" | achar atrizes com pouco/muito material | Baixa | Pequeno | usa `total/hist/watch` | Média |
+| 2 | Pesquisa por tag e por link na busca universal | achar por tema | descoberta | Baixa | Pequeno | índice atual | Alta |
+| 3 | Buscas recentes / atalhos de teclado nos resultados | rapidez | uso diário | Baixa | Pequeno | — | Média |
+| 4 | Salvar combinações de filtros (ex.: "Fila • Ação • não Terror") | repetir sorteios | economiza cliques | Média | Médio | motor de filtros | Alta |
+| 5 | Tags sugeridas na Watchlist a partir de vídeos do mesmo studio/atriz | cadastro mais rápido | menos digitação | Média | Médio | tags no Histórico | Média |
+| 6 | Edição de tags em lote na Watchlist (selecionar vários itens) | organizar a fila antiga | corrige itens "Sem tags" | Média | Médio | seleção múltipla | Alta |
+| 7 | Dashboard: tags mais usadas e fila × avaliados por mês | panorama | decisões | Média | Médio | data de saída da fila | Média |
+| 8 | Filtros persistentes entre sessões | recuperar contexto | menos retrabalho | Baixa | Pequeno | — | Média |
+
+---
+
+# v2.3 — Pesos da avaliação editáveis
+- **Novo padrão:** Cenas 25 • Tema 15 • Casting 15 (era 10) • Performance 10 • Produção 10 (era 15) • Reassistibilidade 10 (era 15) • Roteiro 10 (era 5) • Estética 5 = 100.
+- **Configurações → Pesos da avaliação:** campos em %, soma ao vivo, barra, prévia do impacto (quantos vídeos mudam de nota, média geral, mudanças no Top 10), "Aplicar e recalcular notas" (com confirmação e Desfazer) e "Restaurar padrão".
+- **Regras:** inteiros 0–100, a soma **nunca passa de 100** (o campo editado é limitado ao que sobra). Com soma menor que 100 os pesos valem em proporção e a nota continua de 0 a 10.
+- **Recalculo:** só a nota final; as notas por critério não mudam. Vídeos importados apenas com a nota (sem notas por critério) mantêm a nota original.
+- **Migração (schema 4):** na primeira abertura todas as notas são recalculadas com o novo padrão (cópia bruta em `meu_imdb_premigracao_v4`). Pesos ficam em `meu_imdb_pesos` e entram no backup; importações recalculam as notas com os pesos vigentes. Rótulos de % no cadastro e no guia acompanham os pesos.
+- Não mudou: a "Nota atriz" (pesos próprios).
+
+---
+
+# v2.4 — Lembrete de backup e bônus de tags no sorteio
+- **Lembrete de backup (10 dias):** faixa no topo quando o último backup tem 10 dias ou mais (ou nunca houve backup e já existem dados). "Fazer backup agora" exporta e some; "Lembrar amanhã" adia 24 h. Reavaliado ao abrir, ao voltar para a aba e a cada hora. Guarda `lastBackupAt` e `backupSnoozeUntil` nas preferências.
+- **Bônus de tags no sorteio da Watchlist:** top 5 tags pela média das notas do Histórico suavizada (n/(n+5)), mínimo de 3 vídeos por tag. Bônus fixo por posição: 1º +4 • 2º +3 • 3º +2,5 • 4º +2 • 5º +1,5; máximo +6 por item; itens sem tags ficam neutros. Peso = prioridade + atrizes favoritas + bônus de tags; o cartão do sorteio explica a soma. Interruptor em Configurações (ligado por padrão) mostra o top atual. O ranking muda conforme você avalia.
